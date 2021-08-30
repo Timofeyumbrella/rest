@@ -1,17 +1,4 @@
-const { validationResult, matchedData } = require("express-validator");
-const { createValidator, updateValidator } = require("../utils/validator");
-
-async function validateCreate(req, res, next) {
-  await Promise.all(createValidator.map((validator) => validator.run(req)));
-
-  validate(req, res, next);
-}
-
-async function validateUpdate(req, res, next) {
-  await Promise.all(updateValidator.map((validator) => validator.run(req)));
-
-  validate(req, res, next);
-}
+const { validationResult } = require("express-validator");
 
 const validate = (req, res, next) => {
   const errors = validationResult(req);
@@ -26,7 +13,4 @@ const validate = (req, res, next) => {
   });
 };
 
-module.exports = {
-  validateCreate,
-  validateUpdate,
-};
+module.exports = validate;

@@ -1,17 +1,18 @@
 const express = require("express");
 const eventController = require("../controllers/eventController");
 const router = express.Router();
-const { validateCreate, validateUpdate } = require("../middleware/validate");
+const createValidator = require("../validators/event/create");
+const updateValidator = require("../validators/event/update");
 
 router
   .route("/")
   .get(eventController.findAll)
-  .post(validateCreate, eventController.create);
+  .post(createValidator, eventController.create);
 
 router
   .route("/:id")
   .get(eventController.find)
-  .put(validateUpdate, eventController.update)
+  .put(updateValidator, eventController.update)
   .delete(eventController.destroy);
 
 module.exports = router;

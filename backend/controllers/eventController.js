@@ -1,9 +1,9 @@
 const { Event } = require("../models");
 const ApiError = require("../error/ApiError");
-const catchWrapper = require("../utils/catchWrapper");
+const formatDecorator = require("../decorator/formatDecorator");
 
 const eventController = {
-  findAll: async (req, res) => {
+  findAll: async (req) => {
     const { page = 1, limit = 20 } = req.query;
     const maxLimit = 40;
     const startIndex = (page - 1) * Math.min(limit, maxLimit);
@@ -13,18 +13,18 @@ const eventController = {
       limit: Math.min(limit, maxLimit),
     });
 
-    res.data = events;
+    return events;
   },
 
-  find: async (req, res) => {
+  find: async (req) => {
     const event = await Event.findOne({ where: { id: req.params.id } });
 
     if (!event) throw new ApiError(404);
 
-    res.data = event;
+    return event;
   },
 
-  create: async (req, res) => {
+  create: async (req) => {
     const { title, description, price, date } = req.body;
 
     if (!title || !description) {
@@ -33,10 +33,10 @@ const eventController = {
 
     const event = await Event.create({ title, description, price, date });
 
-    res.data = event;
+    return event;
   },
 
-  update: async (req, res) => {
+  update: async (req) => {
     const { title, description, price, date } = req.body;
 
     const eventToUpdate = await Event.findOne({ where: { id: req.params.id } });
@@ -47,18 +47,18 @@ const eventController = {
 
     await eventToUpdate.update({ title, description, price, date });
 
-    res.data = eventToUpdate;
+    return eventToUpdate;
   },
 
-  destroy: async (req, res) => {
+  destroy: async (req) => {
     const eventToDelete = await Event.findOne({ where: { id: req.params.id } });
 
     if (!eventToDelete) throw new ApiError(404);
 
-    res.data = eventToDelete;
-
     await eventToDelete.destroy();
+
+    return eventToDelete;
   },
 };
 
-module.exports = catchWrapper(eventController);
+module.exports = formatDecorator(eventController);
