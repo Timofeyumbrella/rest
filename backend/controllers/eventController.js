@@ -1,5 +1,4 @@
 const { Event } = require("../models");
-const formatResponse = require("../utils/format");
 const ApiError = require("../error/ApiError");
 const catchWrapper = require("../utils/catchWrapper");
 
@@ -14,7 +13,7 @@ const eventController = {
       limit: Math.min(limit, maxLimit),
     });
 
-    formatResponse(res, events);
+    res.data = events;
   },
 
   find: async (req, res) => {
@@ -22,7 +21,7 @@ const eventController = {
 
     if (!event) throw new ApiError(404);
 
-    formatResponse(res, event);
+    res.data = event;
   },
 
   create: async (req, res) => {
@@ -34,7 +33,7 @@ const eventController = {
 
     const event = await Event.create({ title, description, price, date });
 
-    formatResponse(res, event);
+    res.data = event;
   },
 
   update: async (req, res) => {
@@ -48,7 +47,7 @@ const eventController = {
 
     await eventToUpdate.update({ title, description, price, date });
 
-    formatResponse(res, eventToUpdate);
+    res.data = eventToUpdate;
   },
 
   destroy: async (req, res) => {
@@ -56,9 +55,9 @@ const eventController = {
 
     if (!eventToDelete) throw new ApiError(404);
 
-    await eventToDelete.destroy();
+    res.data = eventToDelete;
 
-    formatResponse(res, eventToDelete);
+    await eventToDelete.destroy();
   },
 };
 
