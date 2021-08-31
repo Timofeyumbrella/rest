@@ -1,6 +1,6 @@
 const responseDecorator = (fn) => async (req, res, next) => {
   try {
-    const data = await fn(req, res, next);
+    const data = await fn(req.validated);
 
     res.status(200).json({
       status: "success",

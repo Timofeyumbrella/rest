@@ -1,14 +1,27 @@
-const { body } = require("express-validator");
+const { body, param } = require("express-validator");
 const validate = require("../../middleware/validate");
 
 const updateValidator = [
+  param("id").isInt().toInt().withMessage("Your id must be a number"),
   body("title")
+    .isString()
+    .trim()
     .isLength({ min: 5, max: 55 })
-    .withMessage("title must be at least 5 characters long"),
-  body("price").isNumeric().withMessage("price must be a number"),
+    .escape()
+    .withMessage("title must be 5 characters min and 55 characters max"),
+  body("price").isDecimal({ decimal_digits: "1,2" }).toFloat().withMessage(""),
   body("description")
+    .isString()
+    .trim()
     .isLength({ min: 15, max: 250 })
-    .withMessage("description must be at least 15 characters long"),
+    .escape()
+    .withMessage(
+      "description must be 15 characters min and 250 characters max"
+    ),
+  body("date")
+    .isDate()
+    .toDate()
+    .withMessage("Date should represent Date Time String Format"),
   validate,
 ];
 
