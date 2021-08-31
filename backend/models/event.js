@@ -12,6 +12,6 @@ module.exports = (sequelize, DataTypes) =>
         notEmpty: true,
       },
     },
-    price: DataTypes.FLOAT,
+    price: DataTypes.DECIMAL,
     date: DataTypes.DATE,
   });
