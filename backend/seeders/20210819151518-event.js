@@ -1,7 +1,7 @@
 const faker = require("faker");
 
 module.exports = {
-  up: async (queryInterface) => {
+  up: (queryInterface) => {
     return queryInterface.bulkInsert(
       "Events",
       new Array(10).fill({}).map(() => ({

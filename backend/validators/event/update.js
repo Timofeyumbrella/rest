@@ -2,7 +2,10 @@ const { body, param } = require("express-validator");
 const validate = require("../../middleware/validate");
 
 const updateValidator = [
-  param("id").isInt().toInt().withMessage("Your id must be a number"),
+  param("id")
+    .isInt({ min: 1 })
+    .toInt()
+    .withMessage("Your id must be a positive number"),
   body("title")
     .isString()
     .trim()
