@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) =>
-  sequelize.define("Event", {
+module.exports = (sequelize, DataTypes) => {
+  const Event = sequelize.define("Event", {
     title: {
       type: DataTypes.STRING,
       validate: {
@@ -15,3 +15,6 @@ module.exports = (sequelize, DataTypes) =>
     price: DataTypes.DECIMAL,
     date: DataTypes.DATE,
   });
+
+  return Event;
+};

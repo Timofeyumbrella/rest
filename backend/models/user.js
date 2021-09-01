@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) =>
-  sequelize.define("User", {
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define("User", {
     name: {
       type: DataTypes.STRING,
       validate: {
@@ -33,3 +33,6 @@ module.exports = (sequelize, DataTypes) =>
       allowNull: false,
     },
   });
+
+  return User;
+};
