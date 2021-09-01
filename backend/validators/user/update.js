@@ -27,12 +27,7 @@ const updateValidator = [
     .trim()
     .escape()
     .withMessage("gender must be a string"),
-  body("role")
-    .isString()
-    .trim()
-    .isLength({ min: 4 })
-    .escape()
-    .withMessage("role must be a string of 4+ characters"),
+
   body("password")
     .isString()
     .isStrongPassword({ minSymbols: 0 })

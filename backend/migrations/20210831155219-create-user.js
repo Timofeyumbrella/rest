@@ -29,12 +29,6 @@ module.exports = {
           notEmpty: true,
         },
       },
-      role: {
-        type: Sequelize.STRING,
-        validate: {
-          notEmpty: true,
-        },
-      },
       password: {
         type: Sequelize.STRING,
         allowNull: false,
