@@ -22,7 +22,7 @@ db.Event = require("./event.js")(sequelize, Sequelize.DataTypes);
 db.User = require("./user.js")(sequelize, Sequelize.DataTypes);
 db.Follow = require("./follow.js")(sequelize, Sequelize.DataTypes);
 
-db.Event.belongsToMany(db.User, { through: db.Follow, foreignKey: "EventId" });
-db.User.belongsToMany(db.Event, { through: db.Follow, foreignKey: "UserId" });
+db.Event.belongsToMany(db.User, { through: db.Follow, foreignKey: "eventId" });
+db.User.belongsToMany(db.Event, { through: db.Follow, foreignKey: "userId" });
 
 module.exports = db;

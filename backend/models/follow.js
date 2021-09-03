@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) =>
   sequelize.define("Follow", {
-    UserId: {
+    userId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       references: {
@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) =>
         key: "id",
       },
     },
-    EventId: {
+    eventId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       references: {
