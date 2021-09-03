@@ -3,19 +3,35 @@ require("dotenv").config();
 const express = require("express");
 const chalk = require("chalk");
 const { sequelize } = require("./models");
+const passport = require("passport");
+const session = require("express-session");
+
 const handleExceptions = require("./middleware/handleExceptions");
 
 const eventRouter = require("./routes/eventRouter");
 const userRouter = require("./routes/userRouter");
 const followRouter = require("./routes/followRouter");
+const authRouter = require("./routes/authRouter");
 
 const app = express();
 
 app.use(express.json());
 
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//   })
+// );
+
+app.use(passport.initialize());
+// app.use(passport.session());
+
 app.use("/events", eventRouter);
-app.use("/users", userRouter);
 app.use("/user", followRouter);
+app.use("/users", userRouter);
+app.use("/user", authRouter);
 
 app.use(handleExceptions);
 

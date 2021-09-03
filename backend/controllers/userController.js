@@ -22,12 +22,6 @@ const userController = {
     return user;
   },
 
-  create: ({ password, ...otherData }) =>
-    User.create({
-      password: bcrypt.hashSync(password, 10),
-      ...otherData,
-    }),
-
   update: async ({ password, ...otherData }) => {
     const userToUpdate = await User.findOne({ where: { id } });
 
