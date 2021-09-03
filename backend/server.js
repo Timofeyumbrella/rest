@@ -3,6 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const chalk = require("chalk");
 const { sequelize } = require("./models");
+const ApiError = require("./error/ApiError");
+
 const eventRouter = require("./routes/eventRouter");
 const userRouter = require("./routes/userRouter");
 const followRouter = require("./routes/followRouter");
@@ -16,6 +18,12 @@ app.use("/users", userRouter);
 app.use("/user", followRouter);
 
 app.use((err, _, res, __) => {
+  !(err instanceof ApiError) &&
+    res.status(500).json({
+      status: "fail",
+      description: "Internal Server Error",
+    });
+
   res.status(err.message).json({
     status: "fail",
     description: err.description,
