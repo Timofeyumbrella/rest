@@ -14,7 +14,6 @@ const loginValidator = [
     .withMessage(
       "password must include at least one lowercase letter, uppercase letter and a number"
     ),
-  ,
   validate,
 ];
 
