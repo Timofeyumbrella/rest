@@ -12,7 +12,7 @@ const authController = {
 
     return User.create({
       password: await bcrypt.hash(password, 10),
-      email: email,
+      email,
       ...otherData,
     });
   },
@@ -20,11 +20,11 @@ const authController = {
   login: async ({ email, password }) => {
     const user = await User.findOne({ where: { email } });
 
-    if (!user) throw new ApiError(404);
+    if (!user) throw new ApiError(401);
 
     const validPassword = await bcrypt.compare(password, user.password);
 
-    if (!validPassword) throw new ApiError(403);
+    if (!validPassword) throw new ApiError(401);
 
     return generateTokens(email);
   },
