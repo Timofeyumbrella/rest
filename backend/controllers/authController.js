@@ -7,13 +7,13 @@ const formatDecorator = require("../decorator/formatDecorator");
 const generateTokens = require("../utils/auth");
 
 const authController = {
-  register: async ({ password, email, ...otherData }) => {
+  register: async ({ password, email, ...userFields }) => {
     if (await User.findOne({ where: { email } })) throw new ApiError(403);
 
     return User.create({
       password: await bcrypt.hash(password, 10),
       email,
-      ...otherData,
+      ...userFields,
     });
   },
 
