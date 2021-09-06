@@ -22,7 +22,7 @@ const userController = {
     return user;
   },
 
-  update: async ({ password, ...otherData }) => {
+  update: async ({ id, password, ...otherData }) => {
     const userToUpdate = await User.findOne({ where: { id } });
 
     if (!userToUpdate) {
