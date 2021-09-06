@@ -1,9 +1,9 @@
 const express = require("express");
 const followValidator = require("../validators/follow/follow");
-const followController = require("../controllers/followController");
+const FollowController = require("../controllers/FollowController");
 
 const router = express.Router();
 
-router.route("/follow").post(followValidator, followController.create);
+router.route("/follow").post(followValidator, FollowController.create);
 
 module.exports = router;

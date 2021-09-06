@@ -1,5 +1,5 @@
 const express = require("express");
-const eventController = require("../controllers/eventController");
+const EventController = require("../controllers/EventController");
 const router = express.Router();
 
 const createValidator = require("../validators/event/create");
@@ -10,13 +10,13 @@ const deleteValidator = require("../validators/event/delete");
 
 router
   .route("/")
-  .get(findAllValidator, eventController.findAll)
-  .post(createValidator, eventController.create);
+  .get(findAllValidator, EventController.findAll)
+  .post(createValidator, EventController.create);
 
 router
   .route("/:id")
-  .get(findValidator, eventController.find)
-  .put(updateValidator, eventController.update)
-  .delete(deleteValidator, eventController.destroy);
+  .get(findValidator, EventController.find)
+  .put(updateValidator, EventController.update)
+  .delete(deleteValidator, EventController.destroy);
 
 module.exports = router;

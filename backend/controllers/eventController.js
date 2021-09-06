@@ -23,14 +23,14 @@ const eventController = {
 
   create: (event) => Event.create(event),
 
-  update: async ({ id, title, description, price, date }) => {
+  update: async ({ id, ...eventFields }) => {
     const eventToUpdate = await Event.findOne({ where: { id } });
 
     if (!eventToUpdate) {
       throw new ApiError(404);
     }
 
-    return eventToUpdate.update({ title, description, price, date });
+    return eventToUpdate.update({ ...eventFields });
   },
 
   destroy: async ({ id }) => {

@@ -22,7 +22,7 @@ const userController = {
     return user;
   },
 
-  update: async ({ id, password, ...otherData }) => {
+  update: async ({ id, password, ...userFields }) => {
     const userToUpdate = await User.findOne({ where: { id } });
 
     if (!userToUpdate) {
@@ -31,7 +31,7 @@ const userController = {
 
     return userToUpdate.update({
       password: bcrypt.hashSync(password, 10),
-      ...otherData,
+      ...userFields,
     });
   },
 
