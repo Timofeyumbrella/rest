@@ -19,7 +19,12 @@ const createValidator = [
     .isEmail()
     .trim()
     .escape()
-    .withMessage("you must provide valid email"),
+    .withMessage("you must provide valid email")
+    .custom(async (value) => {
+      const user = await User.findOne({ where: { email: value } });
+
+      if (user) throw new Error("Email already in use");
+    }),
   body("gender")
     .isString()
     .trim()
