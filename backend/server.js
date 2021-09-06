@@ -5,7 +5,7 @@ const chalk = require("chalk");
 const { sequelize } = require("./models");
 const passport = require("passport");
 
-const passportConfig = require('./config/passportConfig');
+const passportConfig = require("./config/passportConfig");
 const handleExceptions = require("./middleware/handleExceptions");
 
 const eventRouter = require("./routes/eventRouter");
@@ -37,4 +37,4 @@ app.listen(port, async () => {
   } catch (error) {
     console.log(chalk.bold.red("unable to connect to the database: ", error));
   }
- });
+});
