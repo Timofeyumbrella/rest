@@ -9,9 +9,9 @@ const updateValidator = [
   body("name")
     .isString()
     .trim()
-    .isLength({ min: 5, max: 15 })
+    .isLength({ min: 3, max: 55 })
     .escape()
-    .withMessage("name must be 5 characters min and 15 characters max"),
+    .withMessage("name must be 3 characters min and 55 characters max"),
   body("age")
     .isInt({ min: 12 })
     .toInt()
