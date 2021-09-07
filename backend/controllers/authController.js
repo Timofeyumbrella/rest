@@ -14,9 +14,7 @@ const authController = {
     });
   },
 
-  login: async ({ email, _ }) => {
-    return generateTokens(email);
-  },
+  login: ({ email }) => generateTokens(email),
 };
 
 module.exports = formatDecorator(authController);
