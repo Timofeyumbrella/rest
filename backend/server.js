@@ -1,8 +1,12 @@
 require("dotenv").config();
 
+const passport = require("passport");
+require("./config/passport/localStrategy")(passport);
+
 const express = require("express");
 const chalk = require("chalk");
 const { sequelize } = require("./models");
+
 const handleExceptions = require("./middleware/handleExceptions");
 
 const eventRouter = require("./routes/eventRouter");
@@ -13,6 +17,7 @@ const authRouter = require("./routes/authRouter");
 const app = express();
 
 app.use(express.json());
+
 app.use("/events", eventRouter);
 app.use("/user", followRouter);
 app.use("/users", userRouter);
