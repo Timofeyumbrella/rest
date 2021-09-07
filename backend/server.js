@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const passport = require("passport");
 require("./config/passport/localStrategy")(passport);
+require("./config/passport/jwtStrategy")(passport);
 
 const express = require("express");
 const chalk = require("chalk");

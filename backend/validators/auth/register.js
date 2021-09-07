@@ -34,7 +34,7 @@ const createValidator = [
     .isString()
     .isStrongPassword({ minSymbols: 0 })
     .withMessage(
-      "password must include at least one lowercase letter, uppercase letter and a number"
+      "password must be at least 8 characters long, include at least one lowercase letter, uppercase letter and a number"
     ),
   validate,
 ];

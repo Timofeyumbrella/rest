@@ -1,4 +1,6 @@
 const express = require("express");
+const passport = require("passport");
+
 const EventController = require("../controllers/EventController");
 const router = express.Router();
 
@@ -10,7 +12,11 @@ const deleteValidator = require("../validators/event/delete");
 
 router
   .route("/")
-  .get(findAllValidator, EventController.findAll)
+  .get(
+    findAllValidator,
+    passport.authenticate("jwt", { session: false }),
+    EventController.findAll
+  )
   .post(createValidator, EventController.create);
 
 router
