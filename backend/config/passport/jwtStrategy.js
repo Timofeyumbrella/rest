@@ -2,7 +2,6 @@ const passport = require("passport");
 const { Strategy: JwtStrategy, ExtractJwt } = require("passport-jwt");
 
 const { User } = require("../../models");
-const ApiError = require("../../error/ApiError");
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -15,9 +14,11 @@ module.exports = () =>
       try {
         const user = await User.findOne({ where: { email: jwtPayload.email } });
 
+        if (!user) return done(null, false);
+
         return done(null, user);
       } catch (error) {
-        throw new ApiError(403);
+        return done(error, false);
       }
     })
   );
