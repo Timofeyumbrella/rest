@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 
 const { User } = require("../models");
-const ApiError = require("../error/ApiError");
 const formatDecorator = require("../decorator/formatDecorator");
 
 const generateTokens = require("../utils/auth");
@@ -15,15 +14,7 @@ const authController = {
     });
   },
 
-  login: async ({ email, password }) => {
-    const user = await User.findOne({ where: { email } });
-
-    if (!user) throw new ApiError(401);
-
-    const validPassword = await bcrypt.compare(password, user.password);
-
-    if (!validPassword) throw new ApiError(401);
-
+  login: async ({ email, _ }) => {
     return generateTokens(email);
   },
 };
