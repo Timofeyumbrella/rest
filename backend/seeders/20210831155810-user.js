@@ -11,6 +11,7 @@ module.exports = {
         email: faker.internet.email(),
         gender: faker.name.gender(),
         password: bcrypt.hashSync(faker.internet.password(), 10),
+        roleId: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
       }))
