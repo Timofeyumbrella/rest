@@ -10,12 +10,12 @@ const router = express.Router();
 
 router.route("/register").post(createValidator, AuthController.register);
 
-router.route("/login").post(
-  loginValidator,
-  passport.authenticate("local", {
-    session: false,
-  }),
-  AuthController.login
-);
+router
+  .route("/login")
+  .post(
+    loginValidator,
+    passport.authenticate("local", { session: false }),
+    AuthController.login
+  );
 
 module.exports = router;
