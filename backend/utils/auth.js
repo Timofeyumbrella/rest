@@ -1,18 +1,18 @@
 const jwt = require("jsonwebtoken");
 
-const generateAccessToken = (email) =>
-  jwt.sign({ email, type: "access" }, process.env.JWT_SECRET, {
+const generateAccessToken = (user) =>
+  jwt.sign({ user, type: "access" }, process.env.JWT_SECRET, {
     expiresIn: "1h",
   });
 
-const generateRefreshToken = (email) =>
-  jwt.sign({ email, type: "refresh" }, process.env.JWT_SECRET, {
+const generateRefreshToken = (user) =>
+  jwt.sign({ user, type: "refresh" }, process.env.JWT_SECRET, {
     expiresIn: "30d",
   });
 
-const generateTokens = (email) => ({
-  access: generateAccessToken(email),
-  refresh: generateRefreshToken(email),
+const generateTokens = (user) => ({
+  access: generateAccessToken(user),
+  refresh: generateRefreshToken(user),
 });
 
 module.exports = generateTokens;
