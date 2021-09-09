@@ -2,8 +2,14 @@ const { body } = require("express-validator");
 const validate = require("../../middleware/validate");
 
 const followValidator = [
-  body("userId").isInt({ min: 1 }).toInt(),
-  body("eventId").isInt({ min: 1 }).toInt(),
+  body("userId")
+    .isInt({ min: 1 })
+    .toInt()
+    .withMessage("user id must be a positive number"),
+  body("eventId")
+    .isInt({ min: 1 })
+    .toInt()
+    .withMessage("event id must be a positive number"),
   validate,
 ];
 

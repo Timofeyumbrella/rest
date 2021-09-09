@@ -8,6 +8,7 @@ const router = express.Router();
 
 router
   .route("/follow")
-  .post(followValidator, authenticate, FollowController.create);
+  .post(followValidator, authenticate, FollowController.create)
+  .get(authenticate, FollowController.findAll);
 
 module.exports = router;

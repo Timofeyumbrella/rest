@@ -3,8 +3,10 @@ const ApiError = require("../error/ApiError");
 const formatDecorator = require("../decorator/formatDecorator");
 
 const followController = {
-  create: ({ userId, eventId }) => {
-    return Follow.create({ userId, eventId });
+  create: (subscription) => Follow.create(subscription),
+
+  findAll: () => {
+    return Follow.findAll();
   },
 };
 
