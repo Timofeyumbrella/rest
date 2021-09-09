@@ -6,14 +6,16 @@ const findAllValidator = require("../validators/user/findAll");
 const findValidator = require("../validators/user/find");
 const deleteValidator = require("../validators/user/delete");
 
+const authenticate = require("../middleware/authenticate");
+
 const router = express.Router();
 
-router.route("/").get(findAllValidator, UserController.findAll);
+router.route("/").get(findAllValidator, authenticate, UserController.findAll);
 
 router
   .route("/:id")
-  .get(findValidator, UserController.find)
-  .put(updateValidator, UserController.update)
-  .delete(deleteValidator, UserController.destroy);
+  .get(findValidator, authenticate, UserController.find)
+  .put(updateValidator, authenticate, UserController.update)
+  .delete(deleteValidator, authenticate, UserController.destroy);
 
 module.exports = router;

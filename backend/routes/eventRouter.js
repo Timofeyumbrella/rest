@@ -15,12 +15,12 @@ const deleteValidator = require("../validators/event/delete");
 router
   .route("/")
   .get(findAllValidator, authenticate, EventController.findAll)
-  .post(createValidator, EventController.create);
+  .post(createValidator, authenticate, EventController.create);
 
 router
   .route("/:id")
-  .get(findValidator, EventController.find)
-  .put(updateValidator, EventController.update)
-  .delete(deleteValidator, EventController.destroy);
+  .get(findValidator, authenticate, EventController.find)
+  .put(updateValidator, authenticate, EventController.update)
+  .delete(deleteValidator, authenticate, EventController.destroy);
 
 module.exports = router;
