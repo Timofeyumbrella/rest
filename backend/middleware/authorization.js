@@ -13,10 +13,10 @@ module.exports = (req, _, next) => {
   Permission.findOne({
     where: { roleId: req.jwtUser.roleId, entity: req.baseUrl.slice(1, -1) },
   }).then((permission) => {
-    const access = permission[methods[req.method]];
+    const access = permission.dataValues[methods[req.method]];
 
-    if (access === "none") return next(new ApiError(403, "Access denied"));
+    if (access === "none") next(new ApiError(403, "Access denied"));
+
+    next();
   });
-
-  next();
 };
