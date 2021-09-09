@@ -5,9 +5,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        validate: {
-          notEmpty: true,
-        },
+        allowNull: false,
       },
       title: {
         type: Sequelize.STRING,
