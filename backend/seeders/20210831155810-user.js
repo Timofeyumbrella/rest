@@ -18,7 +18,7 @@ module.exports = {
     );
   },
 
-  down: async (queryInterface) => {
+  down: (queryInterface) => {
     return queryInterface.bulkDelete("Users", null, {});
   },
 };
