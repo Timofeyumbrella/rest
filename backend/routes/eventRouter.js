@@ -2,7 +2,7 @@ const express = require("express");
 
 const EventController = require("../controllers/EventController");
 
-const authorization = require("../middleware/authorization");
+const authenticate = require("../middleware/authenticate");
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ const deleteValidator = require("../validators/event/delete");
 
 router
   .route("/")
-  .get(findAllValidator, authorization, EventController.findAll)
+  .get(findAllValidator, authenticate, EventController.findAll)
   .post(createValidator, EventController.create);
 
 router
