@@ -7,15 +7,18 @@ const findValidator = require("../validators/user/find");
 const deleteValidator = require("../validators/user/delete");
 
 const authenticate = require("../middleware/authenticate");
+const authorization = require("../middleware/authorization");
 
 const router = express.Router();
 
-router.route("/").get(findAllValidator, authenticate, UserController.findAll);
+router
+  .route("/")
+  .get(findAllValidator, authenticate, authorization, UserController.findAll);
 
 router
   .route("/:id")
-  .get(findValidator, authenticate, UserController.find)
-  .put(updateValidator, authenticate, UserController.update)
-  .delete(deleteValidator, authenticate, UserController.destroy);
+  .get(findValidator, authenticate, authorization, UserController.find)
+  .put(updateValidator, authenticate, authorization, UserController.update)
+  .delete(deleteValidator, authenticate, authorization, UserController.destroy);
 
 module.exports = router;
