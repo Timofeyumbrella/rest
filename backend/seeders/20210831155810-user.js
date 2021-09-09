@@ -3,19 +3,28 @@ const faker = require("faker");
 
 module.exports = {
   up: (queryInterface) => {
-    return queryInterface.bulkInsert(
-      "Users",
-      new Array(10).fill({}).map(() => ({
-        name: faker.name.firstName(),
-        age: faker.datatype.number({ min: 12, max: 85 }),
-        email: faker.internet.email(),
-        gender: faker.name.gender(),
-        password: bcrypt.hashSync(faker.internet.password(), 10),
-        roleId: 2,
+    return queryInterface.bulkInsert("Users", [
+      {
+        name: "Timofey",
+        age: 18,
+        email: "timfrommit@gmail.com",
+        gender: "gachi remix",
+        password: bcrypt.hashSync("Timofey228", 10),
+        roleId: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
-      }))
-    );
+      },
+      {
+        name: "Anton",
+        age: 18,
+        email: "anton@gmail.com",
+        gender: "full master",
+        password: bcrypt.hashSync("Anton700", 10),
+        roleId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ]);
   },
 
   down: (queryInterface) => {
