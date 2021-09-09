@@ -36,10 +36,6 @@ const createValidator = [
     .withMessage(
       "password must be at least 8 characters long, include at least one lowercase letter, uppercase letter and a number"
     ),
-  body("roleId")
-    .isInt({ min: 1, max: 2 })
-    .toInt()
-    .withMessage("roleId should be either 1 or 2"),
   validate,
 ];
 

@@ -6,10 +6,10 @@ const formatDecorator = require("../decorator/formatDecorator");
 const generateTokens = require("../utils/auth");
 
 const authController = {
-  register: async ({ password, email, ...userFields }) => {
+  register: async ({ password, ...userFields }) => {
     return User.create({
       password: await bcrypt.hash(password, 10),
-      email,
+      roleId: 2,
       ...userFields,
     });
   },
