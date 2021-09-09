@@ -23,18 +23,16 @@ db.User = require("./user.js")(sequelize, Sequelize.DataTypes);
 db.Follow = require("./follow.js")(sequelize, Sequelize.DataTypes);
 db.Role = require("./role.js")(sequelize, Sequelize.DataTypes);
 db.Permission = require("./permission.js")(sequelize, Sequelize.DataTypes);
-db.Access = require("./access.js")(sequelize, Sequelize.DataTypes);
 
 db.Event.belongsToMany(db.User, { through: db.Follow, foreignKey: "eventId" });
 db.User.belongsToMany(db.Event, { through: db.Follow, foreignKey: "userId" });
 
-db.Role.belongsToMany(db.Permission, {
-  through: db.Access,
+db.Role.hasMany(db.Permission, {
   foreignKey: "roleId",
 });
-db.Permission.belongsToMany(db.Role, {
-  through: db.Access,
-  foreignKey: "permissionId",
+
+db.Permission.belongsTo(db.Role, {
+  foreignKey: "roleId",
 });
 
 db.Role.hasMany(db.User, {
