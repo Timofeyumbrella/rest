@@ -15,17 +15,19 @@ module.exports = (req, _, next) => {
   }).then((permission) => {
     const access = permission.dataValues[methods[req.method]];
 
-    if (access === "none") next(new ApiError(403, "Access denied"));
+    if (access === "none") return next(new ApiError(403, "Access denied"));
 
     if (access === "own" && !req.url.split("/")[1]) {
-      next(new ApiError(403, "Users find all method is not available for you"));
+      return next(
+        new ApiError(403, "Users find all method is not available for you")
+      );
     }
 
     if (
       access === "own" &&
       parseInt(req.url.split("/")[1]) !== req.jwtUser.id
     ) {
-      next(new ApiError(403, "Access denied"));
+      return next(new ApiError(403, "Access denied"));
     }
 
     next();
