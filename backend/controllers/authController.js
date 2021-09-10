@@ -15,11 +15,11 @@ const authController = {
   },
 
   login: async ({ email }) => {
-    const { name, age, gender, roleId } = await User.findOne({
+    const { id, name, age, gender, roleId } = await User.findOne({
       where: { email },
     });
 
-    return generateTokens({ name, age, email, gender, roleId });
+    return generateTokens({ id, name, age, email, gender, roleId });
   },
 };
 
