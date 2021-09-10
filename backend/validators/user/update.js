@@ -34,6 +34,10 @@ const updateValidator = [
     .withMessage(
       "password must include at least one lowercase letter, uppercase letter and a number"
     ),
+  body("roleId")
+    .isInt({ min: 1, max: 2 })
+    .toInt()
+    .withMessage("Role id should either be 1 or 2"),
   validate,
 ];
 
