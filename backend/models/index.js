@@ -27,12 +27,14 @@ db.Permission = require("./permission.js")(sequelize, Sequelize.DataTypes);
 db.Event.belongsToMany(db.User, { through: db.Follow, foreignKey: "eventId" });
 db.User.belongsToMany(db.Event, { through: db.Follow, foreignKey: "userId" });
 
-db.Role.hasMany(db.Permission, {
+db.Role.belongsToMany(db.Permission, {
+  through: "Accesses",
   foreignKey: "roleId",
 });
 
-db.Permission.belongsTo(db.Role, {
-  foreignKey: "roleId",
+db.Permission.belongsToMany(db.Role, {
+  through: "Accesses",
+  foreignKey: "permissionId",
 });
 
 db.Role.hasMany(db.User, {
