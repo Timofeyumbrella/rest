@@ -2,6 +2,7 @@ const { User } = require("../models");
 const ApiError = require("../error/ApiError");
 const formatDecorator = require("../decorator/formatDecorator");
 const bcrypt = require("bcrypt");
+const atob = require("atob");
 
 const userController = {
   findAll: ({ page = 1, limit = 20 }) => {
@@ -22,8 +23,9 @@ const userController = {
     return user;
   },
 
-  update: async ({ id, password, roleId, ...userFields }) => {
+  update: async ({ authorization, id, password, roleId, ...userFields }) => {
     const userToUpdate = await User.findOne({ where: { id } });
+    const jwtUser = JSON.parse(atob(authorization.split(".")[1])).user;
 
     if (!userToUpdate) {
       throw new ApiError(404);
@@ -31,7 +33,7 @@ const userController = {
 
     return userToUpdate.update({
       password: bcrypt.hashSync(password, 10),
-      roleId: userToUpdate.roleId === 1 ? roleId : 2,
+      roleId: jwtUser.roleId === 1 ? roleId : 2,
       ...userFields,
     });
   },

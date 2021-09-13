@@ -1,7 +1,10 @@
-const { body, param } = require("express-validator");
+const { body, param, header } = require("express-validator");
 const validate = require("../../middleware/validate");
 
 const updateValidator = [
+  header("authorization")
+    .isString()
+    .withMessage("Your token must represent a string"),
   param("id")
     .isInt({ min: 1 })
     .toInt()
