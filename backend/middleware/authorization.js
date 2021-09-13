@@ -17,16 +17,13 @@ module.exports = (req, _, next) => {
 
     if (access === "none") return next(new ApiError(403, "Access denied"));
 
-    if (access === "own" && !req.url.split("/")[1]) {
+    if (access === "own" && !req.params.id) {
       return next(
         new ApiError(403, "Users find all method is not available for you")
       );
     }
 
-    if (
-      access === "own" &&
-      parseInt(req.url.split("/")[1]) !== req.jwtUser.id
-    ) {
+    if (access === "own" && req.params.id !== req.jwtUser.id) {
       return next(new ApiError(403, "Access denied"));
     }
 
