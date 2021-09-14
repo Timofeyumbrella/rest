@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const faker = require("faker");
 
 module.exports = {
   up: (queryInterface) => {
