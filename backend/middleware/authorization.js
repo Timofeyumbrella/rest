@@ -17,15 +17,9 @@ module.exports = async (req, _, next) => {
 
     const access = permission.dataValues[methods[req.method]];
 
-    if (access === "none") throw new ApiError(403, "Access denied");
-
-    if (access === "own" && !req.params.id) {
-      throw new ApiError(403, "Users find all method is not available for you");
-    }
-
-    if (access === "own" && req.params.id !== req.jwtUser.id) {
-      throw new ApiError(403, "Access denied");
-    }
+    (access === "none" ||
+      (access === "own" && req.params.id !== req.jwtUser.id)) &&
+      next(new ApiError(403, "Access denied"));
 
     next();
   } catch (error) {
