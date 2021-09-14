@@ -9,24 +9,26 @@ const methods = {
   DELETE: "delete",
 };
 
-module.exports = (req, _, next) => {
-  Permission.findOne({
-    where: { roleId: req.jwtUser.roleId, entity: req.baseUrl.slice(1, -1) },
-  }).then((permission) => {
+module.exports = async (req, _, next) => {
+  try {
+    const permission = await Permission.findOne({
+      where: { roleId: req.jwtUser.roleId, entity: req.baseUrl.slice(1, -1) },
+    });
+
     const access = permission.dataValues[methods[req.method]];
 
-    if (access === "none") return next(new ApiError(403, "Access denied"));
+    if (access === "none") throw new ApiError(403, "Access denied");
 
     if (access === "own" && !req.params.id) {
-      return next(
-        new ApiError(403, "Users find all method is not available for you")
-      );
+      throw new ApiError(403, "Users find all method is not available for you");
     }
 
     if (access === "own" && req.params.id !== req.jwtUser.id) {
-      return next(new ApiError(403, "Access denied"));
+      throw new ApiError(403, "Access denied");
     }
 
     next();
-  });
+  } catch (error) {
+    next(error);
+  }
 };
