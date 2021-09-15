@@ -21,11 +21,6 @@ router
   .route("/:id")
   .get(findValidator, authenticate, EventController.find)
   .put(updateValidator, authenticate, EventController.update)
-  .delete(
-    deleteValidator,
-    authenticate,
-    authorization,
-    EventController.destroy
-  );
+  .delete(deleteValidator, authenticate, EventController.destroy);
 
 module.exports = router;
