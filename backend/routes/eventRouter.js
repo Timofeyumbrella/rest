@@ -3,7 +3,6 @@ const express = require("express");
 const EventController = require("../controllers/EventController");
 
 const authenticate = require("../middleware/authenticate");
-const authorization = require("../middleware/authorization");
 
 const router = express.Router();
 
@@ -15,13 +14,13 @@ const deleteValidator = require("../validators/event/delete");
 
 router
   .route("/")
-  .get(findAllValidator, authenticate, authorization, EventController.findAll)
-  .post(createValidator, authenticate, authorization, EventController.create);
+  .get(findAllValidator, authenticate, EventController.findAll)
+  .post(createValidator, authenticate, EventController.create);
 
 router
   .route("/:id")
-  .get(findValidator, authenticate, authorization, EventController.find)
-  .put(updateValidator, authenticate, authorization, EventController.update)
+  .get(findValidator, authenticate, EventController.find)
+  .put(updateValidator, authenticate, EventController.update)
   .delete(
     deleteValidator,
     authenticate,

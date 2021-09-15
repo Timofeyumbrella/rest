@@ -1,6 +1,8 @@
 const { Event } = require("../models");
 const ApiError = require("../error/ApiError");
 const formatDecorator = require("../decorator/formatDecorator");
+const createPolicyDecorator = require("../decorator/createPolicyDecorator");
+const eventPolicy = require("../policies/eventPolicy");
 
 const eventController = {
   findAll: ({ page = 1, limit = 20 }) => {
@@ -44,4 +46,6 @@ const eventController = {
   },
 };
 
-module.exports = formatDecorator(eventController);
+module.exports = formatDecorator(
+  createPolicyDecorator(eventPolicy)(eventController)
+);

@@ -3,13 +3,16 @@ module.exports = (sequelize, DataTypes) => {
     create: {
       type: DataTypes.STRING,
     },
-    read: {
+    find: {
+      type: DataTypes.STRING,
+    },
+    findAll: {
       type: DataTypes.STRING,
     },
     update: {
       type: DataTypes.STRING,
     },
-    delete: {
+    destroy: {
       type: DataTypes.STRING,
     },
   });
