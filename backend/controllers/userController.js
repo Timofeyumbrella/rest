@@ -4,6 +4,9 @@ const formatDecorator = require("../decorator/formatDecorator");
 const bcrypt = require("bcrypt");
 const atob = require("atob");
 
+const userPolicy = require("../policies/userPolicy");
+const createPolicyDecorator = require("../decorator/createPolicyDecorator");
+
 const userController = {
   findAll: ({ page = 1, limit = 20 }) => {
     const maxLimit = 40;
@@ -49,4 +52,6 @@ const userController = {
   },
 };
 
-module.exports = formatDecorator(userController);
+module.exports = formatDecorator(
+  createPolicyDecorator(userPolicy)(userController)
+);
