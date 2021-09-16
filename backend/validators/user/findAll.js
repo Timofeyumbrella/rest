@@ -1,7 +1,10 @@
-const { query } = require("express-validator");
+const { query, header } = require("express-validator");
 const validate = require("../../middleware/validate");
 
 const findAllValidator = [
+  header("authorization")
+    .isString()
+    .withMessage("provided token should be a string"),
   query("page")
     .optional()
     .isInt({ min: 1 })

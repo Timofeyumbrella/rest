@@ -4,7 +4,7 @@ const validate = require("../../middleware/validate");
 const updateValidator = [
   header("authorization")
     .isString()
-    .withMessage("Your token must represent a string"),
+    .withMessage("provided token should be a string"),
   param("id")
     .isInt({ min: 1 })
     .toInt()
