@@ -8,7 +8,7 @@ const createPolicyDecorator = (policy) => (controller) =>
       const handler =
         (fn) =>
         async (...params) => {
-          if (!(await policy[key]())) {
+          if (!(await policy[key](...params))) {
             throw new ApiError(403, "Access denied");
           }
 
