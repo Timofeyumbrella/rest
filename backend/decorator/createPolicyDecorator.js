@@ -11,20 +11,19 @@ const createPolicyDecorator = (policy) => (controller) =>
         (fn) =>
         async (...params) => {
           const [validated] = params;
-
           const { authorization, id } = validated;
 
           const { roleId, id: userId } = JSON.parse(
             atob(authorization.split(".")[1])
           ).user;
 
-          const permission = await Permission.findOne({
+          const { dataValues: permission } = await Permission.findOne({
             where: { roleId, entity: policy.entity },
           });
 
           const hasAccess =
-            permission.dataValues[key] === "any" ||
-            (permission.dataValues[key] === "own" && userId === id);
+            permission[key] === "any" ||
+            (permission[key] === "own" && userId === id);
 
           if (!(await policy[key](hasAccess))) {
             throw new ApiError(403, "Access denied");
