@@ -3,6 +3,7 @@ const ApiError = require("../error/ApiError");
 const formatDecorator = require("../decorator/formatDecorator");
 const bcrypt = require("bcrypt");
 const atob = require("atob");
+const entity = require("../utils/entity");
 
 const userPolicy = require("../policies/userPolicy");
 const createPolicyDecorator = require("../decorator/createPolicyDecorator");
@@ -53,5 +54,7 @@ const userController = {
 };
 
 module.exports = formatDecorator(
-  createPolicyDecorator(userPolicy)(userController)
+  createPolicyDecorator({ ...userPolicy, entity: entity(__filename) })(
+    userController
+  )
 );

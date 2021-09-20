@@ -3,6 +3,7 @@ const ApiError = require("../error/ApiError");
 const formatDecorator = require("../decorator/formatDecorator");
 const createPolicyDecorator = require("../decorator/createPolicyDecorator");
 const eventPolicy = require("../policies/eventPolicy");
+const entity = require("../utils/entity");
 
 const eventController = {
   findAll: ({ page = 1, limit = 20 }) => {
@@ -47,5 +48,7 @@ const eventController = {
 };
 
 module.exports = formatDecorator(
-  createPolicyDecorator(eventPolicy)(eventController)
+  createPolicyDecorator({ ...eventPolicy, entity: entity(__filename) })(
+    eventController
+  )
 );
