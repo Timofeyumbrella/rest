@@ -1,7 +1,7 @@
 const { User } = require("../../models");
 
-describe("User Controller", () => {
-  test("getting all users", async () => {
+describe("User", () => {
+  it("should get all users", async () => {
     const users = await User.findAll();
 
     expect(users).toEqual(
@@ -18,7 +18,7 @@ describe("User Controller", () => {
     );
   });
 
-  test("getting a user", async () => {
+  it("should get a user", async () => {
     const user = await User.findOne({ where: { email: "dummy@gmail.com" } });
 
     expect(user).toMatchObject({
@@ -32,7 +32,7 @@ describe("User Controller", () => {
     });
   });
 
-  test("updating a user", async () => {
+  it("should update a user", async () => {
     const user = await User.findOne({ where: { email: "dummy@gmail.com" } });
 
     await user.update({
@@ -55,7 +55,7 @@ describe("User Controller", () => {
     });
   });
 
-  test("deleting a user", async () => {
+  it("should delete a user", async () => {
     const user = await User.findOne({ where: { email: "notdummy@gmail.com" } });
 
     await user.destroy();

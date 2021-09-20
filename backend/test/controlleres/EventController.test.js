@@ -1,7 +1,7 @@
 const { Event } = require("../../models");
 
-describe("Event Controller", () => {
-  test("creating an event", async () => {
+describe("Event", () => {
+  it("should create an event", async () => {
     const event = await Event.create({
       title: "event title",
       description: "event description",
@@ -18,7 +18,7 @@ describe("Event Controller", () => {
     });
   });
 
-  test("getting all events", async () => {
+  it("should get all events", async () => {
     const events = await Event.findAll();
 
     expect(events).toEqual(
@@ -33,7 +33,7 @@ describe("Event Controller", () => {
     );
   });
 
-  test("getting an event", async () => {
+  it("should get an event", async () => {
     const { dataValues: event } = await Event.findOne({
       where: { title: "event title" },
     });
@@ -47,7 +47,7 @@ describe("Event Controller", () => {
     });
   });
 
-  test("updating an event", async () => {
+  it("should update an event", async () => {
     const event = await Event.findOne({ where: { title: "event title" } });
 
     await event.update({
@@ -66,7 +66,7 @@ describe("Event Controller", () => {
     });
   });
 
-  test("deleting an event", async () => {
+  it("should delete an event", async () => {
     const event = await Event.findOne({
       where: { title: "updated title" },
     });

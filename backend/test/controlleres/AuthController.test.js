@@ -1,8 +1,8 @@
 const { User } = require("../../models");
 const generateTokens = require("../../utils/auth");
 
-describe("Auth Controller", () => {
-  test("creating a user", async () => {
+describe("Auth", () => {
+  it("should get all the users", async () => {
     const user = await User.create({
       name: "dummy",
       age: 18,
@@ -23,7 +23,7 @@ describe("Auth Controller", () => {
     });
   });
 
-  test("login user", async () => {
+  it("should get a user token", async () => {
     const user = await User.findOne({ where: { email: "dummy@gmail.com" } });
 
     expect(generateTokens(user)).toMatchObject({
