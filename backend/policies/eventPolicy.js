@@ -1,5 +1,4 @@
 const eventPolicy = {
-  entity: "event",
   findAll: async (hasAccess) => hasAccess,
   find: async (hasAccess) => hasAccess,
   create: async (hasAccess) => hasAccess,
