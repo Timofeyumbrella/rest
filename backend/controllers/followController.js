@@ -1,13 +1,9 @@
-const { Follow } = require("../models");
-const ApiError = require("../error/ApiError");
+const FollowService = require("../services/FollowService");
 const formatDecorator = require("../decorator/formatDecorator");
 
 const followController = {
-  create: (subscription) => Follow.create(subscription),
-
-  findAll: () => {
-    return Follow.findAll();
-  },
+  create: (subscription) => FollowService.create(subscription),
+  findAll: () => FollowService.findAll(),
 };
 
 module.exports = formatDecorator(followController);

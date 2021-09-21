@@ -1,50 +1,21 @@
-const { Event } = require("../models");
-const ApiError = require("../error/ApiError");
 const formatDecorator = require("../decorator/formatDecorator");
 const createPolicyDecorator = require("../decorator/createPolicyDecorator");
 const eventPolicy = require("../policies/eventPolicy");
 const entity = require("../utils/entity");
 
+const EventService = require("../services/EventService");
+
 const eventController = {
-  findAll: ({ page = 1, limit = 20 }) => {
-    const maxLimit = 40;
-    const startIndex = (page - 1) * Math.min(limit, maxLimit);
+  findAll: ({ page = 1, limit = 20 }) => EventService.findAll(page, limit),
 
-    return Event.findAll({
-      offset: startIndex,
-      limit: Math.min(limit, maxLimit),
-    });
-  },
+  find: ({ id }) => EventService.find(id),
 
-  find: async ({ id }) => {
-    const event = await Event.findOne({ where: { id } });
+  create: (event) => EventService.create(event),
 
-    if (!event) throw new ApiError(404);
+  update: ({ id, ...eventFields }) =>
+    EventService.update({ id, ...eventFields }),
 
-    return event;
-  },
-
-  create: (event) => Event.create(event),
-
-  update: async ({ id, ...eventFields }) => {
-    const eventToUpdate = await Event.findOne({ where: { id } });
-
-    if (!eventToUpdate) {
-      throw new ApiError(404);
-    }
-
-    return eventToUpdate.update({ ...eventFields });
-  },
-
-  destroy: async ({ id }) => {
-    const eventToDelete = await Event.findOne({ where: { id } });
-
-    if (!eventToDelete) throw new ApiError(404);
-
-    await eventToDelete.destroy();
-
-    return eventToDelete;
-  },
+  destroy: ({ id }) => EventService.destroy(id),
 };
 
 module.exports = formatDecorator(
