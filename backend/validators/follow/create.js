@@ -1,7 +1,7 @@
 const { body } = require("express-validator");
 const validate = require("../../middleware/validate");
 
-const followValidator = [
+const createValidator = [
   body("userId")
     .isInt({ min: 1 })
     .toInt()
@@ -13,4 +13,4 @@ const followValidator = [
   validate,
 ];
 
-module.exports = followValidator;
+module.exports = createValidator;
