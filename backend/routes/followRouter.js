@@ -1,5 +1,5 @@
 const express = require("express");
-const createValidator = require("../validators/follow/follow");
+const createValidator = require("../validators/follow/create");
 const FollowController = require("../controllers/FollowController");
 
 const authenticate = require("../middleware/authenticate");
