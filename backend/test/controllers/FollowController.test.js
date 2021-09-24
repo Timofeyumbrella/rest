@@ -7,39 +7,41 @@ const {
 const FollowController = require("../../controllers/FollowController");
 const FollowService = require("../../services/FollowService");
 
+let req;
+let res;
+let next;
+
+beforeEach(() => {
+  req = mockRequest();
+  res = mockResponse();
+  next = mockNext();
+});
+
 jest.mock("../../services/FollowService", () => ({
-  create: jest.fn(() => {
-    return "create";
-  }),
-  findAll: jest.fn(() => {
-    return "findAll";
-  }),
+  create: jest.fn().mockResolvedValue("create"),
+  findAll: jest.fn().mockResolvedValue("findAll"),
 }));
 
 describe("Follow controller", () => {
   it("should call follow service create method", async () => {
-    const req = mockRequest();
-
     req.validated = {
       userId: 1,
       eventId: 1,
     };
 
-    const res = mockResponse();
-    const next = mockNext();
-
     await FollowController.create(req, res, next);
 
-    expect(FollowService.create).toHaveBeenCalled();
+    expect(FollowService.create).toHaveBeenCalledWith({
+      userId: req.validated.userId,
+      eventId: req.validated.eventId,
+    });
+    expect(await FollowService.create()).toEqual("create");
   });
 
   it("should call follow service findAll method", async () => {
-    const req = mockRequest();
-    const res = mockResponse();
-    const next = mockNext();
-
     await FollowController.findAll(req, res, next);
 
     expect(FollowService.findAll).toHaveBeenCalled();
+    expect(await FollowService.findAll()).toEqual("findAll");
   });
 });

@@ -7,19 +7,23 @@ const {
 const AuthController = require("../../controllers/AuthController");
 const AuthService = require("../../services/AuthService");
 
+let req;
+let res;
+let next;
+
+beforeEach(() => {
+  req = mockRequest();
+  res = mockResponse();
+  next = mockNext();
+});
+
 jest.mock("../../services/AuthService", () => ({
-  register: jest.fn(() => {
-    return "register";
-  }),
-  login: jest.fn(() => {
-    return "login";
-  }),
+  register: jest.fn().mockResolvedValue("register"),
+  login: jest.fn().mockResolvedValue("login"),
 }));
 
 describe("Auth controller", () => {
   it("should call auth service register method", async () => {
-    const req = mockRequest();
-
     req.validated = {
       name: "user",
       age: 18,
@@ -28,27 +32,21 @@ describe("Auth controller", () => {
       password: "Plainuser1234",
     };
 
-    const res = mockResponse();
-    const next = mockNext();
-
     await AuthController.register(req, res, next);
 
     expect(AuthService.register).toHaveBeenCalled();
+    expect(await AuthService.register()).toEqual("register");
   });
 
   it("should call auth service login method", async () => {
-    const req = mockRequest();
-
     req.validated = {
       email: "user@gmail.com",
       password: "Plainuser1234",
     };
 
-    const res = mockResponse();
-    const next = mockNext();
-
     await AuthController.login(req, res, next);
 
     expect(AuthService.login).toHaveBeenCalled();
+    expect(await AuthService.login()).toEqual("login");
   });
 });

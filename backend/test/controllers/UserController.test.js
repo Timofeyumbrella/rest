@@ -7,58 +7,50 @@ const {
 const UserController = require("../../controllers/UserController");
 const UserService = require("../../services/UserService");
 
+let req;
+let res;
+let next;
+
+beforeEach(() => {
+  req = mockRequest();
+  res = mockResponse();
+  next = mockNext();
+});
+
 jest.mock("../../services/UserService", () => ({
-  findAll: jest.fn(() => {
-    return "findAll";
-  }),
-  find: jest.fn(() => {
-    return "find";
-  }),
-  update: jest.fn(() => {
-    return "update";
-  }),
-  destroy: jest.fn(() => {
-    return "destroy";
-  }),
+  findAll: jest.fn().mockResolvedValue("findAll"),
+  find: jest.fn().mockResolvedValue("find"),
+  update: jest.fn().mockResolvedValue("update"),
+  destroy: jest.fn().mockResolvedValue("destroy"),
 }));
 
 describe("User controller", () => {
   it("should call user service findAll method", async () => {
-    const req = mockRequest();
-
     req.validated = {
       authorization: process.env.TOKEN_EXAMPLE,
       page: 1,
       limit: 15,
     };
 
-    const res = mockResponse();
-    const next = mockNext();
-
     await UserController.findAll(req, res, next);
 
     expect(UserService.findAll).toHaveBeenCalled();
+    expect(await UserService.findAll()).toEqual("findAll");
   });
 
   it("should call user service find method", async () => {
-    const req = mockRequest();
-
     req.validated = {
       authorization: process.env.TOKEN_EXAMPLE,
       id: 1,
     };
 
-    const res = mockResponse();
-    const next = mockNext();
-
     await UserController.find(req, res, next);
 
-    expect(UserService.find).toHaveBeenCalled();
+    expect(UserService.find).toHaveBeenCalledWith(req.validated.id);
+    expect(await UserService.find()).toEqual("find");
   });
 
   it("should call user service update method", async () => {
-    const req = mockRequest();
-
     req.validated = {
       authorization: process.env.TOKEN_EXAMPLE,
       id: 1,
@@ -67,30 +59,27 @@ describe("User controller", () => {
       email: "user@gmail.com",
       gender: "non binary",
       password: "Plainuser4321",
-      roleId: "2",
+      roleId: 2,
     };
-
-    const res = mockResponse();
-    const next = mockNext();
 
     await UserController.update(req, res, next);
 
-    expect(UserService.update).toHaveBeenCalled();
+    expect(UserService.update).toHaveBeenCalledWith({
+      id: req.validated.id,
+      ...req.validated,
+    });
+    expect(await UserService.update()).toEqual("update");
   });
 
   it("should call user service destroy method", async () => {
-    const req = mockRequest();
-
     req.validated = {
       authorization: process.env.TOKEN_EXAMPLE,
       id: 1,
     };
 
-    const res = mockResponse();
-    const next = mockNext();
-
     await UserController.destroy(req, res, next);
 
-    expect(UserService.destroy).toHaveBeenCalled();
+    expect(UserService.destroy).toHaveBeenCalledWith(req.validated.id);
+    expect(await UserService.destroy()).toEqual("destroy");
   });
 });
