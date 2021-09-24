@@ -7,6 +7,8 @@ const {
 const EventController = require("../../controllers/EventController");
 const EventService = require("../../services/EventService");
 
+const { Permission } = require("../../models");
+
 let req;
 let res;
 let next;
@@ -32,7 +34,7 @@ describe("Event controller", () => {
       title: "event title",
       price: 324.5,
       description: "event description",
-      date: "2021-09-24T11:24:57.348Z",
+      date: new Date("2021-09-23").toISOString(),
     };
 
     await EventController.create(req, res, next);
@@ -73,7 +75,7 @@ describe("Event controller", () => {
       title: "updated title",
       price: 5129.29,
       description: "udpated description",
-      date: "2021-09-24T11:24:57.348Z",
+      date: new Date("2021-09-23").toISOString(),
     };
 
     await EventController.update(req, res, next);
