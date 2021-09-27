@@ -31,7 +31,7 @@ const UserService = {
     }
 
     return userToUpdate.update({
-      password: bcrypt.hashSync(password, 10),
+      password: await bcrypt.hash(password, 10),
       roleId: jwtUser.roleId === 1 ? roleId : 2,
       ...userFields,
     });
