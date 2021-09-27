@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const atob = require("atob");
 
 const UserService = {
-  findAll: ({ page = 1, limit = 20 }) => {
+  findAll: (page, limit) => {
     const maxLimit = 40;
     const startIndex = (page - 1) * Math.min(limit, maxLimit);
 
