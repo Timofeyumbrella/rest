@@ -1,5 +1,4 @@
 const { Follow } = require("../models");
-const formatDecorator = require("../decorator/formatDecorator");
 
 const followController = {
   create: (subscription) => Follow.create(subscription),
@@ -7,4 +6,4 @@ const followController = {
   findAll: () => Follow.findAll(),
 };
 
-module.exports = formatDecorator(followController);
+module.exports = followController;
