@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 
 const { User } = require("../models");
-const generateTokens = require("../utils/auth");
 
 const AuthService = {
   register: async ({ password, ...userFields }) => {
@@ -12,13 +11,10 @@ const AuthService = {
     });
   },
 
-  login: async (email) => {
-    const { id, name, age, gender, roleId } = await User.findOne({
+  login: async (email) =>
+    User.findOne({
       where: { email },
-    });
-
-    return generateTokens({ id, name, age, email, gender, roleId });
-  },
+    }),
 };
 
 module.exports = AuthService;
