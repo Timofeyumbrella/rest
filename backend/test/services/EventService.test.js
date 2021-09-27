@@ -13,21 +13,36 @@ jest.mock("../../models", () => ({
 
 describe("Event service", () => {
   it("should call event model create method", async () => {
-    EventService.create({});
+    EventService.create();
 
     expect(Event.create).toHaveBeenCalled();
-    expect(await Event.create()).toEqual("create");
   });
   it("should call event model findAll method", async () => {
     EventService.findAll(1, 15);
 
     expect(Event.findAll).toHaveBeenCalled();
-    expect(await Event.findAll()).toEqual("findAll");
   });
   it("should call event model find method", async () => {
-    EventService.find(2);
+    EventService.find();
 
     expect(Event.findOne).toHaveBeenCalled();
-    expect(await Event.findOne()).toEqual("findOne");
+  });
+
+  it("should call event model update method", async () => {
+    const event = { id: 1, update: jest.fn() };
+    Event.findOne.mockResolvedValueOnce(event);
+
+    await EventService.update({ id: 1 });
+
+    expect(event.update).toHaveBeenCalled();
+  });
+
+  it("should call event model destroy method", async () => {
+    const event = { id: 3, destroy: jest.fn() };
+    Event.findOne.mockResolvedValueOnce(event);
+
+    await EventService.destroy(3);
+
+    expect(event.destroy).toHaveBeenCalled();
   });
 });

@@ -35,7 +35,6 @@ describe("User controller", () => {
     await UserController.findAll(req, res, next);
 
     expect(UserService.findAll).toHaveBeenCalled();
-    expect(await UserService.findAll()).toEqual("findAll");
   });
 
   it("should call user service find method", async () => {
@@ -47,7 +46,6 @@ describe("User controller", () => {
     await UserController.find(req, res, next);
 
     expect(UserService.find).toHaveBeenCalledWith(req.validated.id);
-    expect(await UserService.find()).toEqual("find");
   });
 
   it("should call user service update method", async () => {
@@ -68,7 +66,6 @@ describe("User controller", () => {
       id: req.validated.id,
       ...req.validated,
     });
-    expect(await UserService.update()).toEqual("update");
   });
 
   it("should call user service destroy method", async () => {
@@ -80,6 +77,5 @@ describe("User controller", () => {
     await UserController.destroy(req, res, next);
 
     expect(UserService.destroy).toHaveBeenCalledWith(req.validated.id);
-    expect(await UserService.destroy()).toEqual("destroy");
   });
 });

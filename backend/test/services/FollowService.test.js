@@ -13,13 +13,11 @@ describe("Follow service", () => {
     FollowService.findAll();
 
     expect(Follow.findAll).toHaveBeenCalled();
-    expect(await Follow.findAll()).toEqual("findAll");
   });
 
   it("should call follow model create method", async () => {
     FollowService.create();
 
     expect(Follow.create).toHaveBeenCalled();
-    expect(await Follow.create()).toEqual("create");
   });
 });

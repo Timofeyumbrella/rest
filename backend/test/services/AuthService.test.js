@@ -13,7 +13,6 @@ describe("Auth service", () => {
     await AuthService.register({ password: "userpassword" });
 
     expect(User.create).toHaveBeenCalled();
-    expect(await User.create()).toEqual("create");
   });
 
   it("should call user model fineOne method", async () => {

@@ -35,7 +35,6 @@ describe("Auth controller", () => {
     await AuthController.register(req, res, next);
 
     expect(AuthService.register).toHaveBeenCalled();
-    expect(await AuthService.register()).toEqual("register");
   });
 
   it("should call auth service login method", async () => {
@@ -47,6 +46,5 @@ describe("Auth controller", () => {
     await AuthController.login(req, res, next);
 
     expect(AuthService.login).toHaveBeenCalled();
-    expect(await AuthService.login()).toEqual("login");
   });
 });

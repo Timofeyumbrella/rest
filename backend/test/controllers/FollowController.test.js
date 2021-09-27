@@ -35,13 +35,11 @@ describe("Follow controller", () => {
       userId: req.validated.userId,
       eventId: req.validated.eventId,
     });
-    expect(await FollowService.create()).toEqual("create");
   });
 
   it("should call follow service findAll method", async () => {
     await FollowController.findAll(req, res, next);
 
     expect(FollowService.findAll).toHaveBeenCalled();
-    expect(await FollowService.findAll()).toEqual("findAll");
   });
 });
