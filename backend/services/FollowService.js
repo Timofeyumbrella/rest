@@ -1,9 +1,9 @@
 const { Follow } = require("../models");
 
-const followController = {
+const followService = {
   create: (subscription) => Follow.create(subscription),
 
   findAll: () => Follow.findAll(),
 };
 
-module.exports = followController;
+module.exports = followService;
