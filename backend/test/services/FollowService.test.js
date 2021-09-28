@@ -3,8 +3,20 @@ const { Follow } = require("../../models");
 
 jest.mock("../../models", () => ({
   Follow: {
-    create: jest.fn().mockResolvedValue("create"),
-    findAll: jest.fn().mockResolvedValue("findAll"),
+    create: jest.fn().mockResolvedValue({
+      userId: 972847012,
+      eventId: 3723412,
+    }),
+    findAll: jest.fn().mockResolvedValue([
+      {
+        userId: 8970123,
+        eventId: 80327401,
+      },
+      {
+        userId: 32043,
+        eventId: 98123740,
+      },
+    ]),
   },
 }));
 
