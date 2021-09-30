@@ -1,24 +1,16 @@
 const FollowService = require("../../services/FollowService");
 const { Follow } = require("../../models");
 
-jest.mock("../../models", () => ({
-  Follow: {
-    create: jest.fn().mockResolvedValue({
-      userId: 972847012,
-      eventId: 3723412,
-    }),
-    findAll: jest.fn().mockResolvedValue([
-      {
-        userId: 8970123,
-        eventId: 80327401,
-      },
-      {
-        userId: 32043,
-        eventId: 98123740,
-      },
-    ]),
-  },
-}));
+jest.mock("../../models", () => {
+  const followServiceMocks = require("../../mocks/services/followServiceMocks");
+
+  return {
+    Follow: {
+      create: jest.fn().mockResolvedValue(followServiceMocks.create),
+      findAll: jest.fn().mockResolvedValue(followServiceMocks.findAll),
+    },
+  };
+});
 
 describe("Follow service", () => {
   it("should call follow model findAll method", async () => {

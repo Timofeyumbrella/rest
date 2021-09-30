@@ -17,10 +17,14 @@ beforeEach(() => {
   next = mockNext();
 });
 
-jest.mock("../../services/AuthService", () => ({
-  register: jest.fn().mockResolvedValue("register"),
-  login: jest.fn().mockResolvedValue("login"),
-}));
+jest.mock("../../services/AuthService", () => {
+  const authControllerMocks = require("../../mocks/controllers/authControllerMocks");
+
+  return {
+    register: jest.fn().mockResolvedValue(authControllerMocks.register),
+    login: jest.fn().mockResolvedValue(authControllerMocks.login),
+  };
+});
 
 describe("Auth controller", () => {
   it("should call auth service register method", async () => {

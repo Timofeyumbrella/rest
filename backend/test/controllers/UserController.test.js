@@ -17,17 +17,24 @@ beforeEach(() => {
   next = mockNext();
 });
 
-jest.mock("../../services/UserService", () => ({
-  findAll: jest.fn().mockResolvedValue("findAll"),
-  find: jest.fn().mockResolvedValue("find"),
-  update: jest.fn().mockResolvedValue("update"),
-  destroy: jest.fn().mockResolvedValue("destroy"),
-}));
+jest.mock("../../services/UserService", () => {
+  const userControllerMocks = require("../../mocks/controllers/userControllerMocks");
+
+  return {
+    findAll: jest.fn().mockResolvedValue(userControllerMocks.findAll),
+    find: jest.fn().mockResolvedValue(userControllerMocks.find),
+    update: jest.fn().mockResolvedValue(userControllerMocks.update),
+    destroy: jest.fn().mockResolvedValue(userControllerMocks.destroy),
+  };
+});
 
 describe("User controller", () => {
+  const authorization =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzI3NTk3NTMsImV4cCI6MTYzMjc2MzM1M30.xtyvwZw8M8-NrKg3qvtWJzBr9GeWiZWD4oSTOxuIYqI";
+
   it("should call user service findAll method", async () => {
     req.validated = {
-      authorization: process.env.TOKEN_EXAMPLE,
+      authorization,
       page: 1,
       limit: 15,
     };
@@ -39,7 +46,7 @@ describe("User controller", () => {
 
   it("should call user service find method", async () => {
     req.validated = {
-      authorization: process.env.TOKEN_EXAMPLE,
+      authorization,
       id: 1,
     };
 
@@ -50,7 +57,7 @@ describe("User controller", () => {
 
   it("should call user service update method", async () => {
     req.validated = {
-      authorization: process.env.TOKEN_EXAMPLE,
+      authorization,
       id: 1,
       name: "user",
       age: 18,
@@ -70,7 +77,7 @@ describe("User controller", () => {
 
   it("should call user service destroy method", async () => {
     req.validated = {
-      authorization: process.env.TOKEN_EXAMPLE,
+      authorization,
       id: 1,
     };
 

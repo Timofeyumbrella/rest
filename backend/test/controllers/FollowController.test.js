@@ -17,10 +17,14 @@ beforeEach(() => {
   next = mockNext();
 });
 
-jest.mock("../../services/FollowService", () => ({
-  create: jest.fn().mockResolvedValue("create"),
-  findAll: jest.fn().mockResolvedValue("findAll"),
-}));
+jest.mock("../../services/FollowService", () => {
+  const followControllerMocks = require("../../mocks/controllers/followControllerMocks");
+
+  return {
+    create: jest.fn().mockResolvedValue(followControllerMocks.create),
+    findAll: jest.fn().mockResolvedValue(followControllerMocks.findAll),
+  };
+});
 
 describe("Follow controller", () => {
   it("should call follow service create method", async () => {

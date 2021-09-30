@@ -1,36 +1,44 @@
 const AuthService = require("../../services/AuthService");
 const { User } = require("../../models");
 
-jest.mock("../../models", () => ({
-  User: {
-    create: jest.fn().mockResolvedValue({
-      id: 23432432432342,
-      password: "$2b$10$63aWrgJjWJKOG0lD96Bn.ezgK5hv.irfwjD",
-      name: "user",
-      age: 29,
-      email: "user@gmail.com",
-      gender: "dominos pizza",
-    }),
-    findOne: jest.fn().mockResolvedValue({
-      access:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozLCJuYW1lIjoiUGhpbGlwIiwiYWdlIjoxOCwiZW1haWwiOiJwaGlsQGdtYWlsLmNvbSIsImdlbmRlciI6InNhZCIsInJvbGVJZCI6Mn0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzI4MzM4NzAsImV4cCI6MTYzMjgzNzQ3MH0.3PxtDJqp0hmmsS3Fkq4D4uzy7svSVGih2PQQv_wU7Gg",
+const generateTokens = require("../../utils/auth");
 
-      refresh:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozLCJuYW1lIjoiUGhpbGlwIiwiYWdlIjoxOCwiZW1haWwiOiJwaGlsQGdtYWlsLmNvbSIsImdlbmRlciI6InNhZCIsInJvbGVJZCI6Mn0sInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNjMyODMzODcwLCJleHAiOjE2MzU0MjU4NzB9.OwDmqgBcEJvlkMbB7Vaj3xNyxgOTbBA3uaW9lBxQwi8",
-    }),
-  },
-}));
+jest.mock("../../utils/auth");
+
+jest.mock("../../models", () => {
+  const authServiceMocks = require("../../mocks/services/authServiceMocks");
+
+  return {
+    User: {
+      create: jest.fn().mockResolvedValue(authServiceMocks.create),
+      findOne: jest.fn().mockResolvedValue(authServiceMocks.findOne),
+    },
+  };
+});
 
 describe("Auth service", () => {
   it("should call user model create method", async () => {
-    await AuthService.register({ password: "userpassword" });
+    await AuthService.register({
+      email: "useremail@gmail.com",
+      password: "userpassword",
+    });
 
     expect(User.create).toHaveBeenCalled();
   });
 
-  it("should call user model fineOne method", async () => {
-    await AuthService.login("useremail@gmail.com");
+  it("should call user model findOne method", async () => {
+    generateTokens.mockResolvedValue({
+      access:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzI5MTAwNDEsImV4cCI6MTYzMjkxMzY0MX0.xRNo82WivXi9lhYtihe6PDwxdoud6fMzI1-4I4DdWj4",
+      refresh:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNjMyOTEwMDQxLCJleHAiOjE2MzU1MDIwNDF9.dgV9teS1aepTY_SuoDkL2eJkIQ_zTSaoBrH52V8gx2A",
+    });
 
-    expect(User.findOne).toHaveBeenCalled();
+    await AuthService.login({
+      email: "useremail@gmail.com",
+      password: "userpassword",
+    });
+
+    expect(generateTokens).toHaveBeenCalled();
   });
 });
