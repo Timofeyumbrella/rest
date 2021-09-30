@@ -24,10 +24,10 @@ describe("Auth service", () => {
       password: "userpassword",
     });
 
+    expect(User.create).toHaveBeenCalled();
     expect(await AuthService.register({ password: "somepassword" })).toEqual(
       authServiceMocks.create
     );
-    expect(User.create).toHaveBeenCalled();
   });
 
   it("should call user model findOne method", async () => {
