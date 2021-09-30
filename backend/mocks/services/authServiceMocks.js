@@ -1,11 +1,11 @@
 module.exports = {
   create: {
-    id: 23432,
-    password: "$2b$10$63aWrgJjWJKOG0lD96Bn.ezgK5hv.irfwjD",
+    id: 72315,
+    password: "10$63aWrgJjWJKOG0lD96Bn.ezgK5hv.irfwjD",
     name: "user",
     age: 29,
     email: "user@gmail.com",
-    gender: "dominos pizza",
+    gender: "tuesday",
   },
 
   findOne: {

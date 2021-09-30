@@ -1,6 +1,7 @@
 const AuthService = require("../../services/AuthService");
 const { User } = require("../../models");
 
+const authServiceMocks = require("../../mocks/services/authServiceMocks");
 const generateTokens = require("../../utils/auth");
 
 jest.mock("../../utils/auth");
@@ -23,6 +24,9 @@ describe("Auth service", () => {
       password: "userpassword",
     });
 
+    expect(await AuthService.register({ password: "somepassword" })).toEqual(
+      authServiceMocks.create
+    );
     expect(User.create).toHaveBeenCalled();
   });
 
@@ -39,6 +43,12 @@ describe("Auth service", () => {
       password: "userpassword",
     });
 
+    expect(AuthService.login()).resolves.toEqual({
+      access:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzI5MTAwNDEsImV4cCI6MTYzMjkxMzY0MX0.xRNo82WivXi9lhYtihe6PDwxdoud6fMzI1-4I4DdWj4",
+      refresh:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNjMyOTEwMDQxLCJleHAiOjE2MzU1MDIwNDF9.dgV9teS1aepTY_SuoDkL2eJkIQ_zTSaoBrH52V8gx2A",
+    });
     expect(generateTokens).toHaveBeenCalled();
   });
 });
