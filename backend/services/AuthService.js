@@ -1,17 +1,14 @@
-const bcrypt = require("bcrypt");
-
 const { User } = require("../models");
 
 const generateTokens = require("../utils/auth");
 
 const AuthService = {
-  register: async ({ password, ...userFields }) => {
-    return User.create({
-      password: await bcrypt.hash(password, 10),
+  register: ({ password, ...userFields }) =>
+    User.create({
+      password,
       roleId: 2,
       ...userFields,
-    });
-  },
+    }),
 
   login: async (email) => {
     const { id, name, age, gender, roleId } = await User.findOne({
