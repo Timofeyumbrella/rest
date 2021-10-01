@@ -33,20 +33,22 @@ describe("User service", () => {
   });
 
   it("should call user model update method and return updated user", async () => {
-    const user = {
+    const userToUpdate = {
       id: 1,
       update: jest.fn().mockResolvedValue(userServiceMocks.update),
     };
 
-    User.findOne.mockResolvedValueOnce(user);
+    User.findOne.mockResolvedValueOnce(userToUpdate);
 
-    expect(
-      await UserService.update({
-        password: "testpassword",
-        authorization:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzI3NTk3NTMsImV4cCI6MTYzMjc2MzM1M30.xtyvwZw8M8-NrKg3qvtWJzBr9GeWiZWD4oSTOxuIYqI",
-      })
-    ).toEqual(userServiceMocks.update);
+    const user = await UserService.update({
+      id: 1,
+      password: "testpassword",
+      authorization:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzI3NTk3NTMsImV4cCI6MTYzMjc2MzM1M30.xtyvwZw8M8-NrKg3qvtWJzBr9GeWiZWD4oSTOxuIYqI",
+    });
+
+    expect(User.findOne).toHaveBeenCalledWith({ where: { id: 1 } });
+    expect(user).toEqual(userServiceMocks.update);
   });
 
   it("should call user model destroy method and return destroyed user", async () => {
