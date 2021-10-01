@@ -41,16 +41,17 @@ describe("Event service", () => {
   });
 
   it("should call event model update method and return updated event", async () => {
-    const event = {
+    const eventToUpdate = {
       id: 1,
       update: jest.fn().mockResolvedValue(eventServiceMocks.update),
     };
 
-    Event.findOne.mockResolvedValueOnce(event);
+    Event.findOne.mockResolvedValueOnce(eventToUpdate);
 
-    expect(await EventService.update({ id: 1 })).toEqual(
-      eventServiceMocks.update
-    );
+    const event = await EventService.update({ id: 1 });
+
+    expect(Event.findOne).toHaveBeenCalledWith({ where: { id: 1 } });
+    expect(event).toEqual(eventServiceMocks.update);
   });
 
   it("should call event model destroy method and return destroyed event", async () => {
