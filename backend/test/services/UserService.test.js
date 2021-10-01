@@ -1,6 +1,8 @@
 const UserService = require("../../services/UserService");
 const { User } = require("../../models");
+
 const userServiceMocks = require("../../mocks/services/userServiceMocks");
+const ApiError = require("../../error/ApiError");
 
 jest.mock("../../models", () => {
   const userServiceMocks = require("../../mocks/services/userServiceMocks");
@@ -30,6 +32,12 @@ describe("User service", () => {
     expect(userPromise).resolves.toEqual(userServiceMocks.findOne);
   });
 
+  it("should throw an error on user model fineOne method", () => {
+    User.findOne.mockResolvedValueOnce(null);
+
+    expect(UserService.find(3)).rejects.toBeInstanceOf(ApiError);
+  });
+
   it("should call user model update method and return updated user", async () => {
     const user = {
       id: 1,
@@ -47,10 +55,28 @@ describe("User service", () => {
     ).toEqual(userServiceMocks.update);
   });
 
+  it("should throw an error on user model update method", () => {
+    User.findOne.mockResolvedValueOnce(null);
+
+    expect(
+      UserService.update({
+        password: "testpassword",
+        authorization:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzI3NTk3NTMsImV4cCI6MTYzMjc2MzM1M30.xtyvwZw8M8-NrKg3qvtWJzBr9GeWiZWD4oSTOxuIYqI",
+      })
+    ).rejects.toBeInstanceOf(ApiError);
+  });
+
   it("should call user model destroy method and return destroyed user", async () => {
     const user = await UserService.destroy(1);
 
     expect(User.destroy).toHaveBeenCalledWith({ where: { id: 1 } });
     expect(user).toEqual(userServiceMocks.findOne);
+  });
+
+  it("should throw an error on user model destroy method", () => {
+    User.findOne.mockResolvedValueOnce(null);
+
+    expect(UserService.destroy(1)).rejects.toBeInstanceOf(ApiError);
   });
 });

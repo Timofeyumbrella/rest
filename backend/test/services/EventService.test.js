@@ -2,6 +2,7 @@ const EventService = require("../../services/EventService");
 const { Event } = require("../../models");
 
 const eventServiceMocks = require("../../mocks/services/eventServiceMocks");
+const ApiError = require("../../error/ApiError");
 
 jest.mock("../../models", () => {
   const eventServiceMocks = require("../../mocks/services/eventServiceMocks");
@@ -47,6 +48,12 @@ describe("Event service", () => {
     expect(eventPromise).resolves.toEqual(eventServiceMocks.findOne);
   });
 
+  it("should throw an error on event model fineOne method", () => {
+    Event.findOne.mockResolvedValueOnce(null);
+
+    expect(EventService.find(3)).rejects.toBeInstanceOf(ApiError);
+  });
+
   it("should call event model update method and return updated event", async () => {
     const event = {
       id: 1,
@@ -60,10 +67,22 @@ describe("Event service", () => {
     );
   });
 
+  it("should throw an error on event model update method", () => {
+    Event.findOne.mockResolvedValueOnce(null);
+
+    expect(EventService.update({ id: 1 })).rejects.toBeInstanceOf(ApiError);
+  });
+
   it("should call event model destroy method and return destroyed event", async () => {
     const event = await EventService.destroy(1);
 
     expect(Event.destroy).toHaveBeenCalledWith({ where: { id: 1 } });
     expect(event).toEqual(eventServiceMocks.findOne);
+  });
+
+  it("should throw an error on event model destroy method", () => {
+    Event.findOne.mockResolvedValue(null);
+
+    expect(EventService.destroy(1)).rejects.toBeInstanceOf(ApiError);
   });
 });
