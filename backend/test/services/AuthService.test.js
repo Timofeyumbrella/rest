@@ -40,10 +40,7 @@ describe("Auth service", () => {
 
     generateTokens.mockResolvedValue(tokens);
 
-    const user = await AuthService.login({
-      email: "useremail@gmail.com",
-      password: "userpassword",
-    });
+    const user = await AuthService.login("useremail@gmail.com");
 
     expect(generateTokens).toHaveBeenCalledWith({
       age: 92,

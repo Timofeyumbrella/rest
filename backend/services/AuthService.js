@@ -10,7 +10,7 @@ const AuthService = {
       ...userFields,
     }),
 
-  login: async ({ email }) => {
+  login: async (email) => {
     const { id, name, age, gender, roleId } = await User.findOne({
       where: { email },
     });
