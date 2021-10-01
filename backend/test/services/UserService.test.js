@@ -16,23 +16,21 @@ jest.mock("../../models", () => {
 });
 
 describe("User service", () => {
-  it("should call user model findAll method and test findAll method return value", async () => {
-    await UserService.findAll(1, 15);
+  it("should call user model findAll method and return found users", () => {
+    const usersPromise = UserService.findAll(1, 15);
 
     expect(User.findAll).toHaveBeenCalledWith({ limit: 15, offset: 0 });
-    expect(UserService.findAll(1, 15)).resolves.toEqual(
-      userServiceMocks.findAll
-    );
+    expect(usersPromise).resolves.toEqual(userServiceMocks.findAll);
   });
 
-  it("should call user model findOne method and test find method return value", async () => {
-    await UserService.find(3);
+  it("should call user model findOne method and return found user", () => {
+    const userPromise = UserService.find(3);
 
     expect(User.findOne).toHaveBeenCalledWith({ where: { id: 3 } });
-    expect(UserService.find(3)).resolves.toEqual(userServiceMocks.findOne);
+    expect(userPromise).resolves.toEqual(userServiceMocks.findOne);
   });
 
-  it("should call user model update method and test udpate method return value", async () => {
+  it("should call user model update method and return updated user", async () => {
     const user = {
       id: 1,
       update: jest.fn().mockResolvedValue(userServiceMocks.update),
@@ -49,10 +47,10 @@ describe("User service", () => {
     ).toEqual(userServiceMocks.update);
   });
 
-  it("should call user model destroy method and test destroy method return value", async () => {
-    await UserService.destroy(1);
+  it("should call user model destroy method and return destroyed user", async () => {
+    const user = await UserService.destroy(1);
 
     expect(User.destroy).toHaveBeenCalledWith({ where: { id: 1 } });
-    expect(await UserService.destroy(1)).toEqual(userServiceMocks.findOne);
+    expect(user).toEqual(userServiceMocks.findOne);
   });
 });

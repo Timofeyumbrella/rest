@@ -14,21 +14,17 @@ jest.mock("../../models", () => {
 });
 
 describe("Follow service", () => {
-  it("should call follow model findAll method and test findAll method return value", async () => {
-    FollowService.findAll();
+  it("should call follow model findAll method and return found follows", () => {
+    const followPromise = FollowService.findAll();
 
     expect(Follow.findAll).toHaveBeenCalled();
-    expect(FollowService.findAll()).resolves.toEqual(
-      followServiceMocks.findAll
-    );
+    expect(followPromise).resolves.toEqual(followServiceMocks.findAll);
   });
 
-  it("should call follow model create method and test create method return value", async () => {
-    FollowService.create({ eventId: 1, userId: 2 });
+  it("should call follow model create method and return created follow", () => {
+    const followPromise = FollowService.create({ eventId: 1, userId: 2 });
 
     expect(Follow.create).toHaveBeenCalledWith({ eventId: 1, userId: 2 });
-    expect(FollowService.create({ eventId: 1, userId: 2 })).resolves.toEqual(
-      followServiceMocks.create
-    );
+    expect(followPromise).resolves.toEqual(followServiceMocks.create);
   });
 });
