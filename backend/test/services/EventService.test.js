@@ -56,6 +56,7 @@ describe("Event service", () => {
   it("should call event model destroy method and return destroyed event", async () => {
     const event = await EventService.destroy(1);
 
+    expect(Event.findOne).toHaveBeenCalledWith({ where: { id: 1 } });
     expect(Event.destroy).toHaveBeenCalledWith({ where: { id: 1 } });
     expect(event).toEqual(eventServiceMocks.findOne);
   });

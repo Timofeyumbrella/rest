@@ -52,6 +52,7 @@ describe("User service", () => {
   it("should call user model destroy method and return destroyed user", async () => {
     const user = await UserService.destroy(1);
 
+    expect(User.findOne).toHaveBeenCalledWith({ where: { id: 1 } });
     expect(User.destroy).toHaveBeenCalledWith({ where: { id: 1 } });
     expect(user).toEqual(userServiceMocks.findOne);
   });
