@@ -47,11 +47,10 @@ describe("Auth service", () => {
 
     expect(generateTokens).toHaveBeenCalledWith({
       age: 92,
-      email: { email: "useremail@gmail.com", password: "userpassword" },
+      email: "useremail@gmail.com",
       gender: "github",
       id: 97234,
       name: "user",
-      roleId: undefined,
     });
     expect(user).toEqual(tokens);
   });
