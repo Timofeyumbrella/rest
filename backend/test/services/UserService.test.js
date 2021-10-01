@@ -16,47 +16,43 @@ jest.mock("../../models", () => {
 });
 
 describe("User service", () => {
-  it("should call user model findAll method", async () => {
-    await UserService.findAll();
+  it("should call user model findAll method and test findAll method return value", async () => {
+    await UserService.findAll(1, 15);
 
-    expect(UserService.findAll()).resolves.toEqual(userServiceMocks.findAll);
-    expect(User.findAll).toHaveBeenCalled();
+    expect(User.findAll).toHaveBeenCalledWith({ limit: 15, offset: 0 });
+    expect(UserService.findAll(1, 15)).resolves.toEqual(
+      userServiceMocks.findAll
+    );
   });
 
-  it("should call user model findOne method", async () => {
-    await UserService.find();
+  it("should call user model findOne method and test find method return value", async () => {
+    await UserService.find(3);
 
-    expect(UserService.find()).resolves.toEqual(userServiceMocks.findOne);
-    expect(User.findOne).toHaveBeenCalled();
+    expect(User.findOne).toHaveBeenCalledWith({ where: { id: 3 } });
+    expect(UserService.find(3)).resolves.toEqual(userServiceMocks.findOne);
   });
 
-  it("should call user model update method", async () => {
+  it("should call user model update method and test udpate method return value", async () => {
     const user = {
       id: 1,
       update: jest.fn().mockResolvedValue(userServiceMocks.update),
     };
+
     User.findOne.mockResolvedValueOnce(user);
 
-    await UserService.update({
-      password: "testpassword",
-      authorization:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzI3NTk3NTMsImV4cCI6MTYzMjc2MzM1M30.xtyvwZw8M8-NrKg3qvtWJzBr9GeWiZWD4oSTOxuIYqI",
-    });
-
-    expect(user.update()).resolves.toEqual(userServiceMocks.update);
-    expect(user.update).toHaveBeenCalled();
+    expect(
+      await UserService.update({
+        password: "testpassword",
+        authorization:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzI3NTk3NTMsImV4cCI6MTYzMjc2MzM1M30.xtyvwZw8M8-NrKg3qvtWJzBr9GeWiZWD4oSTOxuIYqI",
+      })
+    ).toEqual(userServiceMocks.update);
   });
 
-  it("should call user model destroy method", async () => {
-    const user = {
-      id: 1,
-      destroy: jest.fn().mockResolvedValue(userServiceMocks.destroy),
-    };
-    User.findOne.mockResolvedValueOnce(user);
-
+  it("should call user model destroy method and test destroy method return value", async () => {
     await UserService.destroy(1);
 
-    expect(user.destroy()).resolves.toEqual(userServiceMocks.destroy);
-    expect(user.destroy).toHaveBeenCalled();
+    expect(User.destroy).toHaveBeenCalledWith({ where: { id: 1 } });
+    expect(await UserService.destroy(1)).toEqual(userServiceMocks.findOne);
   });
 });
