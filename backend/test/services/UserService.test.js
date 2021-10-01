@@ -32,12 +32,6 @@ describe("User service", () => {
     expect(userPromise).resolves.toEqual(userServiceMocks.findOne);
   });
 
-  it("should throw an error on user model fineOne method", () => {
-    User.findOne.mockResolvedValueOnce(null);
-
-    expect(UserService.find(3)).rejects.toBeInstanceOf(ApiError);
-  });
-
   it("should call user model update method and return updated user", async () => {
     const user = {
       id: 1,
@@ -55,7 +49,20 @@ describe("User service", () => {
     ).toEqual(userServiceMocks.update);
   });
 
-  it("should throw an error on user model update method", () => {
+  it("should call user model destroy method and return destroyed user", async () => {
+    const user = await UserService.destroy(1);
+
+    expect(User.destroy).toHaveBeenCalledWith({ where: { id: 1 } });
+    expect(user).toEqual(userServiceMocks.findOne);
+  });
+
+  it("should throw an error if user not found", () => {
+    User.findOne.mockResolvedValueOnce(null);
+
+    expect(UserService.find(3)).rejects.toBeInstanceOf(ApiError);
+  });
+
+  it("should throw an error if user not found", () => {
     User.findOne.mockResolvedValueOnce(null);
 
     expect(
@@ -67,14 +74,7 @@ describe("User service", () => {
     ).rejects.toBeInstanceOf(ApiError);
   });
 
-  it("should call user model destroy method and return destroyed user", async () => {
-    const user = await UserService.destroy(1);
-
-    expect(User.destroy).toHaveBeenCalledWith({ where: { id: 1 } });
-    expect(user).toEqual(userServiceMocks.findOne);
-  });
-
-  it("should throw an error on user model destroy method", () => {
+  it("should throw an error if user not found", () => {
     User.findOne.mockResolvedValueOnce(null);
 
     expect(UserService.destroy(1)).rejects.toBeInstanceOf(ApiError);

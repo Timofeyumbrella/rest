@@ -20,38 +20,24 @@ jest.mock("../../models", () => {
 
 describe("Event service", () => {
   it("should call event model create method and return created event", () => {
-    const eventPromise = EventService.create({
-      title: "event title",
-      description: "event description",
-      price: 324.5,
-      date: new Date("2022-03-27").toISOString(),
-    });
+    const eventPromise = EventService.create(eventServiceMocks.create);
 
-    expect(Event.create).toHaveBeenCalledWith({
-      title: "event title",
-      description: "event description",
-      price: 324.5,
-      date: new Date("2022-03-27").toISOString(),
-    });
+    expect(Event.create).toHaveBeenCalledWith(eventServiceMocks.create);
     expect(eventPromise).resolves.toEqual(eventServiceMocks.create);
   });
+
   it("should call event model findAll method and return found events", () => {
     const eventsPromise = EventService.findAll(1, 15);
 
     expect(Event.findAll).toHaveBeenCalledWith({ limit: 15, offset: 0 });
     expect(eventsPromise).resolves.toEqual(eventServiceMocks.findAll);
   });
+
   it("should call event model findOne method and return found event", () => {
     const eventPromise = EventService.find(3);
 
     expect(Event.findOne).toHaveBeenCalledWith({ where: { id: 3 } });
     expect(eventPromise).resolves.toEqual(eventServiceMocks.findOne);
-  });
-
-  it("should throw an error on event model fineOne method", () => {
-    Event.findOne.mockResolvedValueOnce(null);
-
-    expect(EventService.find(3)).rejects.toBeInstanceOf(ApiError);
   });
 
   it("should call event model update method and return updated event", async () => {
@@ -67,12 +53,6 @@ describe("Event service", () => {
     );
   });
 
-  it("should throw an error on event model update method", () => {
-    Event.findOne.mockResolvedValueOnce(null);
-
-    expect(EventService.update({ id: 1 })).rejects.toBeInstanceOf(ApiError);
-  });
-
   it("should call event model destroy method and return destroyed event", async () => {
     const event = await EventService.destroy(1);
 
@@ -80,9 +60,21 @@ describe("Event service", () => {
     expect(event).toEqual(eventServiceMocks.findOne);
   });
 
-  it("should throw an error on event model destroy method", () => {
+  it("should throw an error if event not found", () => {
+    Event.findOne.mockResolvedValueOnce(null);
+
+    expect(EventService.find(3)).rejects.toThrow(ApiError);
+  });
+
+  it("should throw an error if event not found", () => {
+    Event.findOne.mockResolvedValueOnce(null);
+
+    expect(EventService.update({ id: 1 })).rejects.toThrow(ApiError);
+  });
+
+  it("should throw an error if event not found", () => {
     Event.findOne.mockResolvedValue(null);
 
-    expect(EventService.destroy(1)).rejects.toBeInstanceOf(ApiError);
+    expect(EventService.destroy(1)).rejects.toThrow(ApiError);
   });
 });
