@@ -37,7 +37,7 @@ const EventService = {
 
     if (!eventToDelete) throw new ApiError(404);
 
-    await eventToDelete.destroy();
+    await Event.destroy({ where: { id } });
 
     return eventToDelete;
   },

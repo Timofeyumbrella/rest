@@ -42,7 +42,7 @@ const UserService = {
 
     if (!userToDelete) throw new ApiError(404);
 
-    await userToDelete.destroy();
+    await User.destroy({ where: { id } });
 
     return userToDelete;
   },
