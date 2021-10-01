@@ -17,7 +17,7 @@ describe("Follow service", () => {
   it("should call follow model findAll method and return found follows", () => {
     const followPromise = FollowService.findAll();
 
-    expect(Follow.findAll).toHaveBeenCalled();
+    expect(Follow.findAll).toHaveBeenCalledWith();
     expect(followPromise).resolves.toEqual(followServiceMocks.findAll);
   });
 
