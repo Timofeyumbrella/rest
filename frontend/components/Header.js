@@ -8,13 +8,15 @@ function Header() {
     <div className={styles.header}>
       <div className={styles.header__container}>
         <Link href="/">
-          <Image
-            src="/assets/logo.svg"
-            alt="logo"
-            width={100}
-            height={100}
-            className={styles.header__logo}
-          />
+          <a>
+            <Image
+              src="/assets/logo.svg"
+              alt="logo"
+              width={100}
+              height={100}
+              className={styles.header__logo}
+            />
+          </a>
         </Link>
         <nav className={styles.header__navbar}>
           <Link href="/events">
