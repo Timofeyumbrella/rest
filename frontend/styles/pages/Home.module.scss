@@ -1,0 +1,19 @@
+.home {
+  height: 78.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__container {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 3.7rem;
+    letter-spacing: 1px;
+  }
+}
