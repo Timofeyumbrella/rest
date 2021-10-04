@@ -17,13 +17,13 @@ const createPolicyDecorator = (policy) => (controller) =>
             atob(authorization.split(".")[1])
           ).user;
 
-          const { dataValues: permission } = await Permission.findOne({
+          const dataValues = await Permission.findOne({
             where: { roleId, entity: policy.entity },
           });
 
           const hasAccess =
-            permission[key] === "any" ||
-            (permission[key] === "own" && userId === id);
+            dataValues[key] === "any" ||
+            (dataValues[key] === "own" && userId === id);
 
           if (!(await policy[key](hasAccess))) {
             throw new ApiError(403, "Access denied");

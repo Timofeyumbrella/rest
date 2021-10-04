@@ -28,6 +28,23 @@ jest.mock("../../services/UserService", () => {
   };
 });
 
+jest.mock("../../models", () => {
+  return {
+    Permission: {
+      findOne: jest.fn().mockResolvedValue({
+        id: 1,
+        create: "any",
+        find: "any",
+        findAll: "any",
+        update: "any",
+        destroy: "any",
+        createdAt: "2021-10-01T14:23:16.347Z",
+        updatedAt: "2021-10-01T14:23:16.347Z",
+      }),
+    },
+  };
+});
+
 describe("User controller", () => {
   const authorization =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzI3NTk3NTMsImV4cCI6MTYzMjc2MzM1M30.xtyvwZw8M8-NrKg3qvtWJzBr9GeWiZWD4oSTOxuIYqI";
@@ -41,7 +58,7 @@ describe("User controller", () => {
 
     await UserController.findAll(req, res, next);
 
-    expect(UserService.findAll).toHaveBeenCalled();
+    expect(UserService.findAll).toHaveBeenCalledWith(1, 15);
   });
 
   it("should call user service find method", async () => {
@@ -69,10 +86,7 @@ describe("User controller", () => {
 
     await UserController.update(req, res, next);
 
-    expect(UserService.update).toHaveBeenCalledWith({
-      id: req.validated.id,
-      ...req.validated,
-    });
+    expect(UserService.update).toHaveBeenCalledWith(req.validated);
   });
 
   it("should call user service destroy method", async () => {

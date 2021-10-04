@@ -26,6 +26,23 @@ jest.mock("../../services/AuthService", () => {
   };
 });
 
+jest.mock("../../models", () => {
+  return {
+    Permission: {
+      findOne: jest.fn().mockResolvedValue({
+        id: 1,
+        create: "any",
+        find: "any",
+        findAll: "any",
+        update: "any",
+        destroy: "any",
+        createdAt: "2021-10-01T14:23:16.347Z",
+        updatedAt: "2021-10-01T14:23:16.347Z",
+      }),
+    },
+  };
+});
+
 describe("Auth controller", () => {
   it("should call auth service register method", async () => {
     req.validated = {
@@ -49,6 +66,6 @@ describe("Auth controller", () => {
 
     await AuthController.login(req, res, next);
 
-    expect(AuthService.login).toHaveBeenCalled();
+    expect(AuthService.login).toHaveBeenCalledWith(req.validated.email);
   });
 });

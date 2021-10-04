@@ -6,12 +6,6 @@ const {
 
 const EventController = require("../../controllers/EventController");
 const EventService = require("../../services/EventService");
-const atob = require("atob");
-
-const { Permission } = require("../../models");
-
-const authorization =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzI3NTk3NTMsImV4cCI6MTYzMjc2MzM1M30.xtyvwZw8M8-NrKg3qvtWJzBr9GeWiZWD4oSTOxuIYqI";
 
 let req;
 let res;
@@ -22,16 +16,6 @@ beforeEach(() => {
   res = mockResponse();
   next = mockNext();
 });
-
-jest.mock("../../models", () => ({
-  Permission: {
-    create: jest.fn().mockResolvedValue({ 1: "any", 2: "none" }),
-    findAll: jest.fn().mockResolvedValue({ 1: "any", 2: "any" }),
-    findOne: jest.fn().mockResolvedValue({ 1: "any", 2: "any" }),
-    update: jest.fn().mockResolvedValue({ 1: "any", 2: "none" }),
-    destroy: jest.fn().mockResolvedValue({ 1: "any", 2: "none" }),
-  },
-}));
 
 jest.mock("../../services/EventService", () => {
   const eventControllerMocks = require("../../mocks/controllers/eventControllerMocks");
@@ -45,7 +29,27 @@ jest.mock("../../services/EventService", () => {
   };
 });
 
+jest.mock("../../models", () => {
+  return {
+    Permission: {
+      findOne: jest.fn().mockResolvedValue({
+        id: 1,
+        create: "any",
+        find: "any",
+        findAll: "any",
+        update: "any",
+        destroy: "any",
+        createdAt: "2021-10-01T14:23:16.347Z",
+        updatedAt: "2021-10-01T14:23:16.347Z",
+      }),
+    },
+  };
+});
+
 describe("Event controller", () => {
+  const authorization =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzI3NTk3NTMsImV4cCI6MTYzMjc2MzM1M30.xtyvwZw8M8-NrKg3qvtWJzBr9GeWiZWD4oSTOxuIYqI";
+
   it("should call event service create method", async () => {
     req.validated = {
       authorization,
@@ -55,12 +59,9 @@ describe("Event controller", () => {
       date: new Date("2021-09-23").toISOString(),
     };
 
-    const permission = await Permission.create();
-    const roleId = JSON.parse(atob(authorization.split(".")[1])).user.roleId;
-
     await EventController.create(req, res, next);
 
-    expect(permission[roleId]).toEqual("any");
+    expect(EventService.create).toHaveBeenCalledWith(req.validated);
   });
 
   it("should call event service findAll method", async () => {
@@ -70,13 +71,9 @@ describe("Event controller", () => {
       limit: 5,
     };
 
-    const permission = await Permission.findAll();
-    const roleId = JSON.parse(atob(authorization.split(".")[1])).user.roleId;
-
     await EventController.findAll(req, res, next);
 
-    // expect(EventService.findAll).toHaveBeenCalled();
-    expect(permission[roleId]).toEqual("any");
+    expect(EventService.findAll).toHaveBeenCalledWith(1, 5);
   });
 
   it("should call event service find method", async () => {
@@ -85,13 +82,9 @@ describe("Event controller", () => {
       id: 10,
     };
 
-    const permission = await Permission.findOne();
-    const roleId = JSON.parse(atob(authorization.split(".")[1])).user.roleId;
-
     await EventController.find(req, res, next);
 
-    expect(permission[roleId]).toEqual("any");
-    // expect(EventService.find).toHaveBeenCalledWith(req.validated.id);
+    expect(EventService.find).toHaveBeenCalledWith(req.validated.id);
   });
 
   it("should call event service update method", async () => {
@@ -104,17 +97,9 @@ describe("Event controller", () => {
       date: new Date("2021-09-23").toISOString(),
     };
 
-    const permission = await Permission.update();
-    const roleId = JSON.parse(atob(authorization.split(".")[1])).user.roleId;
-
     await EventController.update(req, res, next);
 
-    // expect(EventService.update).toHaveBeenCalledWith({
-    //   id: req.validated.id,
-    //   ...req.validated,
-    // });
-
-    expect(permission[roleId]).toEqual("any");
+    expect(EventService.update).toHaveBeenCalledWith(req.validated);
   });
 
   it("should call service destroy method", async () => {
@@ -123,12 +108,8 @@ describe("Event controller", () => {
       id: 1,
     };
 
-    const permission = await Permission.destroy();
-    const roleId = JSON.parse(atob(authorization.split(".")[1])).user.roleId;
-
     await EventController.destroy(req, res, next);
 
-    expect(permission[roleId]).toEqual("any");
-    // expect(EventService.destroy).toHaveBeenCalledWith(req.validated.id);
+    expect(EventService.destroy).toHaveBeenCalledWith(req.validated.id);
   });
 });

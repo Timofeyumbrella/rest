@@ -26,6 +26,23 @@ jest.mock("../../services/FollowService", () => {
   };
 });
 
+jest.mock("../../models", () => {
+  return {
+    Permission: {
+      findOne: jest.fn().mockResolvedValue({
+        id: 1,
+        create: "any",
+        find: "any",
+        findAll: "any",
+        update: "any",
+        destroy: "any",
+        createdAt: "2021-10-01T14:23:16.347Z",
+        updatedAt: "2021-10-01T14:23:16.347Z",
+      }),
+    },
+  };
+});
+
 describe("Follow controller", () => {
   it("should call follow service create method", async () => {
     req.validated = {
@@ -35,15 +52,12 @@ describe("Follow controller", () => {
 
     await FollowController.create(req, res, next);
 
-    expect(FollowService.create).toHaveBeenCalledWith({
-      userId: req.validated.userId,
-      eventId: req.validated.eventId,
-    });
+    expect(FollowService.create).toHaveBeenCalledWith(req.validated);
   });
 
   it("should call follow service findAll method", async () => {
     await FollowController.findAll(req, res, next);
 
-    expect(FollowService.findAll).toHaveBeenCalled();
+    expect(FollowService.findAll).toHaveBeenCalledWith();
   });
 });
