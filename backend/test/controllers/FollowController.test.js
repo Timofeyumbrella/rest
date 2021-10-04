@@ -30,14 +30,16 @@ jest.mock("../../models", () => {
   return {
     Permission: {
       findOne: jest.fn().mockResolvedValue({
-        id: 1,
-        create: "any",
-        find: "any",
-        findAll: "any",
-        update: "any",
-        destroy: "any",
-        createdAt: "2021-10-01T14:23:16.347Z",
-        updatedAt: "2021-10-01T14:23:16.347Z",
+        dataValues: {
+          id: 1,
+          create: "any",
+          find: "any",
+          findAll: "any",
+          update: "any",
+          destroy: "any",
+          createdAt: "2021-10-01T14:23:16.347Z",
+          updatedAt: "2021-10-01T14:23:16.347Z",
+        },
       }),
     },
   };
