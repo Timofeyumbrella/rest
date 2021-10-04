@@ -1,26 +1,25 @@
 import axios from "axios";
 
-const Events = ({ events }) => {
+function Events({ events }) {
   return (
     <div className="events">
+      <h2>list of events in here</h2>
       {events.map((event) => {
         return (
-          <div className="event" key={event.id}>
-            <span className="event__title">{event.title}</span>
-            <span className="event__description">{event.description}</span>
-            <span className="event__price">{event.price}</span>
+          <div key={event.id}>
+            <h2>{event.title}</h2>
           </div>
         );
       })}
     </div>
   );
-};
+}
 
 export async function getStaticProps() {
-  const res = await axios.get("/events");
+  const res = await axios.get("http://localhost:5000/test");
 
   return {
-    props: { events: res.data },
+    props: { events: res.data.events },
   };
 }
 

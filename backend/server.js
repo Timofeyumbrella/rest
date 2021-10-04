@@ -19,6 +19,28 @@ const app = express();
 
 app.use(express.json());
 
+app.get("/test", (_, res) => {
+  res.status(200).json({
+    status: "success",
+    events: [
+      { id: 1, title: "this is event title taken from backend" },
+      { id: 2, title: "same stuff in here" },
+      { id: 3, title: "and also in here" },
+      { id: 4, title: "you wouldn't believe if i tell you" },
+      { id: 5, title: "some title" },
+      { id: 6, title: "some title" },
+      { id: 7, title: "some title" },
+      { id: 8, title: "some title" },
+      { id: 9, title: "some title" },
+      { id: 10, title: "some title" },
+      { id: 11, title: "some title" },
+      { id: 12, title: "some title" },
+      { id: 13, title: "some title" },
+      { id: 14, title: "some title" },
+    ],
+  });
+});
+
 app.use("/events", eventRouter);
 app.use("/user", followRouter);
 app.use("/users", userRouter);
