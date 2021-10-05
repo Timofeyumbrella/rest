@@ -25,6 +25,9 @@ function Header() {
           <Link href="/user/register">
             <a className={styles.header__link}>Auth</a>
           </Link>
+          <Link href="/subscriptions">
+            <a className={styles.header__link}>Subscriptions</a>
+          </Link>
         </nav>
       </div>
     </div>
