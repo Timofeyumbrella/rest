@@ -1,26 +1,15 @@
-import axios from "axios";
+import styles from "../../styles/pages/Events.module.scss";
 
-function Events({ events }) {
+function Events() {
   return (
-    <div className="events">
-      <h2>list of events in here</h2>
-      {events.map((event) => {
-        return (
-          <div key={event.id}>
-            <h2>{event.title}</h2>
-          </div>
-        );
-      })}
+    <div className={styles.events}>
+      <div className={styles.events__container}>
+        <h2 className={styles.events__unavailable}>
+          Events are not available yet
+        </h2>
+      </div>
     </div>
   );
-}
-
-export async function getStaticProps() {
-  const res = await axios.get("http://localhost:5000/test");
-
-  return {
-    props: { events: res.data.events },
-  };
 }
 
 export default Events;
