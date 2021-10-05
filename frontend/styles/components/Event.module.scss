@@ -1,0 +1,38 @@
+.event {
+  width: 47%;
+  margin-top: 3rem;
+  padding: 1rem;
+  background: rgb(255, 255, 255);
+  border-radius: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.1s ease-in;
+
+  &:hover {
+    box-shadow: 0 0 1.3rem rgba(0, 0, 0, 0.2);
+  }
+
+  &__title {
+    font-size: 2rem;
+  }
+
+  &__description {
+    width: 90%;
+    margin-top: 1.3rem;
+    font-size: 1.7rem;
+    font-weight: 600;
+    text-align: start;
+  }
+
+  &__price {
+    margin-top: 3rem;
+  }
+
+  &__price,
+  &__date {
+    font-size: 1.7rem;
+    font-weight: 600;
+    display: block;
+  }
+}
