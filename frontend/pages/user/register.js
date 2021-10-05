@@ -1,14 +1,19 @@
 import { useState } from "react";
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/router";
 
-import styles from "../../styles/pages/user/Register.module.scss";
+import styles from "../../styles/pages/Register.module.scss";
 
 function Register() {
+  const router = useRouter();
+
   const [name, setName] = useState("");
-  const [age, setAge] = useState(0);
+  const [age, setAge] = useState();
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleNameChange = (event) => setName(event.target.value);
   const handleAgeChange = (event) => setAge(event.target.value);
@@ -16,8 +21,28 @@ function Register() {
   const handleGenderChange = (event) => setGender(event.target.value);
   const handlePasswordChange = (event) => setPassword(event.target.value);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    try {
+      await axios.post("http://localhost:5000/user/register", {
+        name,
+        age,
+        email,
+        gender,
+        password,
+      });
+
+      setName("");
+      setAge();
+      setEmail("");
+      setGender("");
+      setPassword("");
+
+      router.push("/user/login");
+    } catch (error) {
+      setError(JSON.parse(JSON.stringify(error)));
+    }
   };
 
   return (

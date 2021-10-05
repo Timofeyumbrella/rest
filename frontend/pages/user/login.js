@@ -1,17 +1,46 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 import Link from "next/link";
+import axios from "axios";
 
-import styles from "../../styles/pages/user/Login.module.scss";
+import { setToken } from "../../redux/token/token.actions";
+
+import styles from "../../styles/pages/Login.module.scss";
 
 function Login() {
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState({});
+
+  const dispatch = useDispatch();
 
   const handleEmailChange = (event) => setEmail(event.target.value);
   const handlePasswordChange = (event) => setPassword(event.target.value);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    try {
+      const { data: res } = await axios.post(
+        "http://localhost:5000/user/login",
+        {
+          email,
+          password,
+        }
+      );
+
+      dispatch(setToken(res.data.access));
+
+      setEmail("");
+      setPassword("");
+
+      router.push("/");
+    } catch (error) {
+      setError(JSON.parse(JSON.stringify(error)));
+    }
   };
 
   return (
