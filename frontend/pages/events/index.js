@@ -29,7 +29,7 @@ export async function getStaticProps() {
     Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzM0MzIyNTcsImV4cCI6MTYzMzQzNTg1N30.cQFCuxmgL4ZnRut-MJYtyp9nVpaNEq7CVaYKBV9aExI`,
   };
 
-  const { data: res } = await axios.get("http://localhost:5000/events", {
+  const { data: res } = await axios.get("/events", {
     headers,
   });
 

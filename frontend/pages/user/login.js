@@ -24,13 +24,10 @@ function Login() {
     event.preventDefault();
 
     try {
-      const { data: res } = await axios.post(
-        "http://localhost:5000/user/login",
-        {
-          email,
-          password,
-        }
-      );
+      const { data: res } = await axios.post("/user/login", {
+        email,
+        password,
+      });
 
       dispatch(setToken(res.data.access));
 

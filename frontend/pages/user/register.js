@@ -25,7 +25,7 @@ function Register() {
     event.preventDefault();
 
     try {
-      await axios.post("http://localhost:5000/user/register", {
+      await axios.post("/user/register", {
         name,
         age,
         email,
