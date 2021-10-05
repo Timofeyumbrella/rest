@@ -5,6 +5,7 @@ require("./config/passport/localStrategy")(passport);
 require("./config/passport/jwtStrategy")(passport);
 
 const express = require("express");
+const cors = require("cors");
 const chalk = require("chalk");
 const { sequelize } = require("./models");
 
@@ -18,6 +19,7 @@ const authRouter = require("./routes/authRouter");
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.use("/events", eventRouter);
 app.use("/user", followRouter);
