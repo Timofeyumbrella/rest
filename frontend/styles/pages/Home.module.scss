@@ -1,19 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+
 .home {
   height: 78.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "Raleway", sans-serif;
 
   &__container {
     width: 50%;
     height: 50%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
   }
 
   &__title {
-    font-size: 3.7rem;
+    margin-top: 3rem;
+    font-size: 3.3rem;
     letter-spacing: 1px;
+    animation: moveInLeft 0.3s ease-in;
+  }
+
+  &__description {
+    margin-top: 1rem;
+    transition: all 0.3s ease-in;
+    animation: moveInRight 0.3s ease-in;
+  }
+
+  &__spinner {
+    margin-top: 3rem;
+    display: inline-block;
+    width: 5rem;
+    height: 5rem;
+    border: 3px solid rgba(195, 195, 195, 0.6);
+    border-radius: 50%;
+    border-top-color: #636767;
+    animation: spin 1s ease-in-out 1 forwards;
+  }
+}
+
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-10rem);
+  }
+
+  80% {
+    transform: translateX(1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(10rem);
+  }
+
+  80% {
+    transform: translateX(-1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes spin {
+  0% {
+    opacity: 1;
+    transform: rotate(360deg);
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
   }
 }
