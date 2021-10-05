@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import styles from "../styles/components/Header.module.scss";
+import styles from "./Header.module.scss";
 
 function Header() {
   return (

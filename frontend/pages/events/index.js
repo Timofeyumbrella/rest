@@ -2,9 +2,9 @@ import { useSelector } from "react-redux";
 
 import axios from "axios";
 
-import Event from "../../components/Event";
+import Event from "../../components/Event/Event";
 
-import styles from "../../styles/pages/Events.module.scss";
+import styles from "./Events.module.scss";
 
 function Events({ events }) {
   return (

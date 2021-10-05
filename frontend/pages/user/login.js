@@ -6,7 +6,7 @@ import axios from "axios";
 
 import { setToken } from "../../redux/token/token.actions";
 
-import styles from "../../styles/pages/Login.module.scss";
+import styles from "./Login.module.scss";
 
 function Login() {
   const router = useRouter();

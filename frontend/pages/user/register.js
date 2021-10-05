@@ -3,7 +3,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-import styles from "../../styles/pages/Register.module.scss";
+import styles from "./Register.module.scss";
 
 function Register() {
   const router = useRouter();

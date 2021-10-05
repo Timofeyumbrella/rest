@@ -1,4 +1,4 @@
-import styles from "../styles/pages/Subscriptions.module.scss";
+import styles from "./Subscriptions.module.scss";
 
 const subscriptions = () => {
   return (

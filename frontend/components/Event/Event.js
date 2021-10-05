@@ -1,4 +1,4 @@
-import styles from "../styles/components/Event.module.scss";
+import styles from "./Event.module.scss";
 
 function Event({ event }) {
   const { title, description, price, date } = event;
