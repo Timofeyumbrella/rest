@@ -19,13 +19,13 @@
     margin-top: 3rem;
     font-size: 3.3rem;
     letter-spacing: 1px;
-    animation: moveInLeft 0.3s ease-in;
+    animation: moveInLeft 0.5s ease-in;
   }
 
   &__description {
     margin-top: 1rem;
     transition: all 0.3s ease-in;
-    animation: moveInRight 0.3s ease-in;
+    animation: moveInRight 0.5s ease-in;
   }
 
   &__spinner {
