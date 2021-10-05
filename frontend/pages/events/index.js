@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux";
-
 import axios from "axios";
 
 import Event from "../../components/Event/Event";
@@ -26,7 +24,7 @@ function Events({ events }) {
 
 export async function getStaticProps() {
   const headers = {
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzM0MzIyNTcsImV4cCI6MTYzMzQzNTg1N30.cQFCuxmgL4ZnRut-MJYtyp9nVpaNEq7CVaYKBV9aExI`,
+    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzM0MzU5MDQsImV4cCI6MTYzMzQzOTUwNH0.yFFVwY6F5Hftkev2cxWnlDFuewiQ5LqE7YtIFqgrDeA`,
   };
 
   const { data: res } = await axios.get("/events", {
