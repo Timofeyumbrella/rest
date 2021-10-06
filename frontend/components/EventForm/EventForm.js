@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import axios from "axios";
+import useAuth from "hooks/useAuth";
 
 import styles from "./EventForm.module.scss";
 
@@ -10,7 +9,7 @@ function EventForm() {
   const [price, setPrice] = useState("");
   const [date, setDate] = useState("");
 
-  const { token } = useSelector((state) => state.token);
+  const auth = useAuth();
 
   const handleTitleChange = (event) => setTitle(event.target.value);
   const handleDescriptionChange = (event) => setDescription(event.target.value);
@@ -20,20 +19,7 @@ function EventForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    await axios.post(
-      "http://localhost:5000/events",
-      {
-        title,
-        description,
-        price,
-        date,
-      },
-      { headers }
-    );
+    await auth.createEvent({ title, description, price, date });
 
     setTitle("");
     setDescription("");

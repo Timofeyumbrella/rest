@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import Link from "next/link";
-import axios from "axios";
 import { useRouter } from "next/router";
+import useAuth from "hooks/useAuth";
 
 import styles from "./Register.module.scss";
 
@@ -17,6 +17,7 @@ function Register() {
   const [error, setError] = useState("");
 
   const { token } = useSelector((state) => state.token);
+  const auth = useAuth();
 
   if (token.length) router.push("/");
 
@@ -30,13 +31,7 @@ function Register() {
     event.preventDefault();
 
     try {
-      await axios.post("/user/register", {
-        name,
-        age,
-        email,
-        gender,
-        password,
-      });
+      await auth.register({ name, age, email, gender, password });
 
       setName("");
       setAge();

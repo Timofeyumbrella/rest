@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import axios from "axios";
+import useAuth from "hooks/useAuth";
 
 import { setToken } from "redux/token/token.actions";
 
@@ -20,6 +20,7 @@ function Login() {
   if (token.length) router.push("/");
 
   const dispatch = useDispatch();
+  const auth = useAuth();
 
   const handleEmailChange = (event) => setEmail(event.target.value);
   const handlePasswordChange = (event) => setPassword(event.target.value);
@@ -28,12 +29,7 @@ function Login() {
     event.preventDefault();
 
     try {
-      const { data: res } = await axios.post("/user/login", {
-        email,
-        password,
-      });
-
-      dispatch(setToken(res.data.access));
+      dispatch(setToken(await auth.login({ email, password })));
 
       setEmail("");
       setPassword("");
