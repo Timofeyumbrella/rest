@@ -5,7 +5,7 @@ function useDescriptionShortener(description) {
     const descriptionWordsAllowed = 10;
     const descriptionWords = description.split(" ");
 
-    if (descriptionWords < descriptionWordsAllowed) return description;
+    if (descriptionWords.length < descriptionWordsAllowed) return description;
 
     return (
       descriptionWords
