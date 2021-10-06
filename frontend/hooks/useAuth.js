@@ -40,6 +40,12 @@ function useAuth() {
     return res.data;
   };
 
+  const getEvent = async (id) => {
+    const { data: res } = await instance.get(`/events/${id}`);
+
+    return res.data;
+  };
+
   const createEvent = async ({ title, description, price, date }) => {
     const { data: res } = await instance.post("/events", {
       title,
@@ -55,6 +61,7 @@ function useAuth() {
     login,
     register,
     getEvents,
+    getEvent,
     createEvent,
   };
 }
