@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import axios from "axios";
@@ -14,6 +14,10 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState({});
+
+  const { token } = useSelector((state) => state.token);
+
+  if (token.length) router.push("/");
 
   const dispatch = useDispatch();
 

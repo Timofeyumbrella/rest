@@ -1,9 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useSelector, useDispatch } from "react-redux";
+
+import { removeToken } from "redux/token/token.actions";
 
 import styles from "./Header.module.scss";
 
 function Header() {
+  const { token } = useSelector((state) => state.token);
+
+  const dispatch = useDispatch();
+
   return (
     <div className={styles.header}>
       <div className={styles.header__container}>
@@ -22,9 +29,18 @@ function Header() {
           <Link href="/events">
             <a className={styles.header__link}>Events</a>
           </Link>
-          <Link href="/user/register">
-            <a className={styles.header__link}>Auth</a>
-          </Link>
+          {token.length ? (
+            <a
+              className={styles.header__link}
+              onClick={() => dispatch(removeToken())}
+            >
+              Sign out
+            </a>
+          ) : (
+            <Link href="/user/register">
+              <a className={styles.header__link}>Auth</a>
+            </Link>
+          )}
           <Link href="/subscriptions">
             <a className={styles.header__link}>Subscriptions</a>
           </Link>

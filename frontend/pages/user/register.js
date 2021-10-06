@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -14,6 +15,10 @@ function Register() {
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const { token } = useSelector((state) => state.token);
+
+  if (token.length) router.push("/");
 
   const handleNameChange = (event) => setName(event.target.value);
   const handleAgeChange = (event) => setAge(event.target.value);
