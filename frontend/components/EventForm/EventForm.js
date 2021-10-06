@@ -7,8 +7,8 @@ import styles from "./EventForm.module.scss";
 function EventForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState();
-  const [date, setDate] = useState();
+  const [price, setPrice] = useState("");
+  const [date, setDate] = useState("");
 
   const { token } = useSelector((state) => state.token);
 
@@ -37,8 +37,8 @@ function EventForm() {
 
     setTitle("");
     setDescription("");
-    setPrice();
-    setDate();
+    setPrice("");
+    setDate("");
   };
 
   return (
