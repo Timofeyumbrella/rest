@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 import Event from "components/Event/Event";
+import EventForm from "components/EventForm/EventForm";
 
 import styles from "./Events.module.scss";
 
@@ -33,17 +34,18 @@ function Events() {
 
   return (
     <div className={styles.events}>
-      <div className={styles.events__container}>
-        {token.length ? (
-          events.map((event) => {
-            return <Event key={event.id} event={event} />;
-          })
-        ) : (
-          <h2 className={styles.events__unavailable}>
-            You need to login first
-          </h2>
-        )}
-      </div>
+      {token.length ? (
+        <>
+          <EventForm />
+          <div className={styles.events__container}>
+            {events.map((event) => {
+              return <Event key={event.id} event={event} />;
+            })}
+          </div>
+        </>
+      ) : (
+        <h2 className={styles.events__unavailable}>You need to login first</h2>
+      )}
     </div>
   );
 }
