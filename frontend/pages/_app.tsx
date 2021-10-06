@@ -1,8 +1,9 @@
 import axios from "axios";
 import { AppProps } from "next/app";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
-import store from "redux/store";
+import { store, persistor } from "redux/store";
 
 import Layout from "components/Layout";
 
@@ -13,9 +14,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <PersistGate persistor={persistor}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </PersistGate>
     </Provider>
   );
 }
