@@ -1,4 +1,4 @@
-import useDescriptionShortener from "../../hooks/useDescriptionShortener";
+import useDescriptionShortener from "hooks/useDescriptionShortener";
 
 import styles from "./Event.module.scss";
 

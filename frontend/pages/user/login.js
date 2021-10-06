@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import axios from "axios";
 
-import { setToken } from "../../redux/token/token.actions";
+import { setToken } from "redux/token/token.actions";
 
 import styles from "./Login.module.scss";
 
