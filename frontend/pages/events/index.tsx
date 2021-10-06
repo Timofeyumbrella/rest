@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import Event from "../../components/Event/Event";
+import Event from "components/Event/Event";
 
 import styles from "./Events.module.scss";
 
@@ -8,8 +8,8 @@ function Events({ events }) {
   return (
     <div className={styles.events}>
       <div className={styles.events__container}>
-        {events.length ? (
-          events.map((event) => {
+        {events.data.length ? (
+          events.data.map((event) => {
             return <Event key={event.id} event={event} />;
           })
         ) : (
@@ -24,10 +24,10 @@ function Events({ events }) {
 
 export async function getStaticProps() {
   const headers = {
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzM0MzU5MDQsImV4cCI6MTYzMzQzOTUwNH0.yFFVwY6F5Hftkev2cxWnlDFuewiQ5LqE7YtIFqgrDeA`,
+    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiVGltb2ZleSIsImFnZSI6MTgsImVtYWlsIjoidGltZnJvbW1pdEBnbWFpbC5jb20iLCJnZW5kZXIiOiJnYWNoaSByZW1peCIsInJvbGVJZCI6MX0sInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE2MzM1MDQ4ODksImV4cCI6MTYzMzUwODQ4OX0.Q1xDvRpuSNM9k2OYArDlc788_b4sO5p0y6odwqBJZPE`,
   };
 
-  const { data: res } = await axios.get("/events", {
+  const res = await axios.get("/events", {
     headers,
   });
 
