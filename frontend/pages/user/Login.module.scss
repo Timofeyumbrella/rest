@@ -1,16 +1,16 @@
 .login {
-  height: 78.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   &__title {
+    margin-top: 5rem;
     font-size: 3.5rem;
   }
 
   &__form {
-    margin: 3rem 0;
+    margin: 3rem;
     height: 33%;
     display: flex;
     flex-direction: column;
@@ -43,7 +43,7 @@
   }
 
   &__submit {
-    margin-top: 4rem;
+    margin: 4rem 0;
     width: 20rem;
     height: 4rem;
     background-color: rgb(46, 46, 46);

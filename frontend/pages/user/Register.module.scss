@@ -1,11 +1,11 @@
 .register {
-  height: 78.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   &__title {
+    margin-top: 5rem;
     font-size: 3.5rem;
   }
 

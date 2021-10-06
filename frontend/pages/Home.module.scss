@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 
 .home {
-  height: 78.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,7 +15,7 @@
   }
 
   &__title {
-    margin-top: 3rem;
+    margin-top: 10rem;
     font-size: 3.3rem;
     letter-spacing: 1px;
     animation: moveInLeft 0.5s ease-in;
