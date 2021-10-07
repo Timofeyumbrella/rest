@@ -13,15 +13,6 @@ function useAuth() {
     return req;
   });
 
-  const login = async ({ email, password }) => {
-    const { data: res } = await instance.post("/user/login", {
-      email,
-      password,
-    });
-
-    return res.data.access;
-  };
-
   const register = async ({ name, age, email, gender, password }) => {
     const { data: res } = await instance.post("/user/register", {
       name,
@@ -33,6 +24,23 @@ function useAuth() {
 
     return res.data;
   };
+
+  const login = async ({ email, password }) => {
+    const { data: res } = await instance.post("/user/login", {
+      email,
+      password,
+    });
+
+    return res.data.access;
+  };
+
+  const createEvent = async ({ title, description, price, date }) =>
+    instance.post("/events", {
+      title,
+      description,
+      price,
+      date,
+    });
 
   const getEvents = async () => {
     const { data: res } = await instance.get("/events");
@@ -46,23 +54,24 @@ function useAuth() {
     return res.data;
   };
 
-  const createEvent = async ({ title, description, price, date }) => {
-    const { data: res } = await instance.post("/events", {
+  const updateEvent = async ({ id, title, description, price, date }) =>
+    instance.put(`/events/${id}`, {
       title,
       description,
       price,
       date,
     });
 
-    return res.data;
-  };
+  const deleteEvent = async (id) => instance.delete(`/events/${id}`);
 
   return {
-    login,
     register,
+    login,
+    createEvent,
     getEvents,
     getEvent,
-    createEvent,
+    updateEvent,
+    deleteEvent,
   };
 }
 

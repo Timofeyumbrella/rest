@@ -1,0 +1,79 @@
+.eventPage {
+  display: flex;
+  justify-content: center;
+
+  &__event {
+    width: 50%;
+    margin-top: 10rem;
+    padding: 1rem;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.5rem;
+    display: flex;
+  }
+
+  &__content {
+    width: 70%;
+  }
+
+  &__title {
+    font-size: 2.7rem;
+    letter-spacing: 1px;
+  }
+
+  &__description {
+    margin: 1rem 0;
+    font-size: 1.9rem;
+  }
+
+  &__price,
+  &__date {
+    display: block;
+    font-weight: 600;
+  }
+
+  &__buttons {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  &__button {
+    width: 15rem;
+    height: 5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1.8rem;
+    background-color: rgb(114, 28, 36);
+    color: rgb(255, 255, 255);
+    transition: all 0.3s ease-in;
+
+    &:nth-child(2) {
+      margin-top: 2rem;
+      background-color: rgb(255, 243, 205);
+      color: rgb(0, 0, 0);
+    }
+
+    &:hover {
+      transform: scale(1.04);
+    }
+  }
+
+  &__spinner {
+    width: 5rem;
+    height: 5rem;
+    margin-top: 10rem;
+    display: inline-block;
+    border: 3px solid rgba(195, 195, 195, 0.6);
+    border-radius: 50%;
+    border-top-color: #636767;
+    animation: spin 1s ease-in-out infinite;
+  }
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
