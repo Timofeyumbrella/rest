@@ -2,10 +2,13 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import useAuth from "hooks/useAuth";
 
+import Modal from "components/Modal/Modal";
+
 import styles from "./EventPage.module.scss";
 
 function EventPage() {
   const [event, setEvent] = useState({});
+  const [showModal, setShowModal] = useState(false);
 
   const router = useRouter();
   const { id } = router.query;
@@ -22,8 +25,6 @@ function EventPage() {
     getEvent();
   }, [id]);
 
-  const handleUpdate = async () => auth.updateEvent(id);
-
   const handleDelete = async () => auth.deleteEvent(id);
 
   return (
@@ -39,11 +40,18 @@ function EventPage() {
             </span>
           </div>
           <div className={styles.eventPage__buttons}>
-            <button className={styles.eventPage__button}>udpate</button>
+            <button
+              className={styles.eventPage__button}
+              onClick={() => setShowModal(true)}
+            >
+              udpate
+            </button>
             <button className={styles.eventPage__button} onClick={handleDelete}>
               delete
             </button>
           </div>
+
+          {showModal && <Modal id={id} />}
         </div>
       ) : (
         <div className={styles.eventPage__spinner} />
