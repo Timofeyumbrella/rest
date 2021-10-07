@@ -41,4 +41,8 @@
     font-weight: 600;
     display: block;
   }
+
+  @media only screen and (max-width: 1000px) {
+    width: 85%;
+  }
 }

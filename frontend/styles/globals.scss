@@ -11,6 +11,14 @@
 
 html {
   font-size: 10px;
+
+  @media only screen and (max-width: 1000px) {
+    font-size: 9px;
+  }
+
+  @media only screen and (max-width: 750px) {
+    font-size: 8px;
+  }
 }
 
 body {

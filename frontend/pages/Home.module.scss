@@ -12,6 +12,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @media only screen and (max-width: 1000px) {
+      width: 75%;
+    }
+
+    @media only screen and (max-width: 750px) {
+      width: 90%;
+    }
   }
 
   &__title {
@@ -25,6 +33,10 @@
     margin-top: 1rem;
     transition: all 0.3s ease-in;
     animation: moveInRight 0.5s ease-in;
+
+    @media only screen and (max-width: 750px) {
+      text-align: center;
+    }
   }
 
   &__spinner {
