@@ -13,15 +13,6 @@ function useAuth() {
     return req;
   });
 
-  const login = async ({ email, password }) => {
-    const { data: res } = await instance.post("/user/login", {
-      email,
-      password,
-    });
-
-    return res.data.access;
-  };
-
   const register = async ({ name, age, email, gender, password }) => {
     const { data: res } = await instance.post("/user/register", {
       name,
@@ -34,28 +25,53 @@ function useAuth() {
     return res.data;
   };
 
-  const getEvents = async () => {
-    const { data: res } = await instance.get("/events");
+  const login = async ({ email, password }) => {
+    const { data: res } = await instance.post("/user/login", {
+      email,
+      password,
+    });
 
-    return res.data;
+    return res.data.access;
   };
 
-  const createEvent = async ({ title, description, price, date }) => {
-    const { data: res } = await instance.post("/events", {
+  const createEvent = async ({ title, description, price, date }) =>
+    instance.post("/events", {
       title,
       description,
       price,
       date,
     });
 
+  const getEvents = async () => {
+    const { data: res } = await instance.get("/events");
+
     return res.data;
   };
 
+  const getEvent = async (id) => {
+    const { data: res } = await instance.get(`/events/${id}`);
+
+    return res.data;
+  };
+
+  const updateEvent = async ({ id, title, description, price, date }) =>
+    instance.put(`/events/${id}`, {
+      title,
+      description,
+      price,
+      date,
+    });
+
+  const deleteEvent = async (id) => instance.delete(`/events/${id}`);
+
   return {
-    login,
     register,
-    getEvents,
+    login,
     createEvent,
+    getEvents,
+    getEvent,
+    updateEvent,
+    deleteEvent,
   };
 }
 
