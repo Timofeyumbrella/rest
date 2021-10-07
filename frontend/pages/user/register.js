@@ -10,7 +10,7 @@ function Register() {
   const router = useRouter();
 
   const [name, setName] = useState("");
-  const [age, setAge] = useState();
+  const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +34,7 @@ function Register() {
       await auth.register({ name, age, email, gender, password });
 
       setName("");
-      setAge();
+      setAge("");
       setEmail("");
       setGender("");
       setPassword("");
