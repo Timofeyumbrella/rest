@@ -51,4 +51,44 @@
       transform: scale(1.02);
     }
   }
+
+  &__input {
+    width: 18rem;
+    height: 5rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.7rem;
+
+    &::placeholder {
+      color: rgb(0, 0, 0);
+    }
+
+    &:focus {
+      outline: none;
+
+      &::placeholder {
+        color: transparent;
+      }
+    }
+
+    &:not(:first-child) {
+      margin-top: 2rem;
+    }
+  }
+
+  &__submit {
+    margin: 3rem 0;
+    width: 15rem;
+    height: 5rem;
+    border-radius: 0.5rem;
+    font-size: 1.6rem;
+    background-color: inherit;
+    box-shadow: 0 0 1.3rem rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
 }

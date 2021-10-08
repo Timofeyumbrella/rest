@@ -64,6 +64,16 @@ function useAuth() {
 
   const deleteEvent = (id) => instance.delete(`/events/${id}`);
 
+  const updateUser = ({ id, name, email, age, gender, password, roleId }) =>
+    instance.put(`/users/${id}`, {
+      name,
+      email,
+      age,
+      gender,
+      password,
+      roleId,
+    });
+
   return {
     register,
     login,
@@ -73,6 +83,7 @@ function useAuth() {
     getEvent,
     updateEvent,
     deleteEvent,
+    updateUser,
   };
 }
 
