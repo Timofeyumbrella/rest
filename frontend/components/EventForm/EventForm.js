@@ -25,6 +25,8 @@ function EventForm() {
     setDescription("");
     setPrice("");
     setDate("");
+
+    window.location.reload(false);
   };
 
   return (

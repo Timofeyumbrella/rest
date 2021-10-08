@@ -31,7 +31,11 @@ function EventPage() {
     getEvent();
   }, [id]);
 
-  const handleDelete = async () => auth.deleteEvent(id);
+  const handleDelete = async () => {
+    await auth.deleteEvent(id);
+
+    router.push("/events");
+  };
 
   return (
     <div className={styles.eventPage}>

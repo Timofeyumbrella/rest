@@ -29,12 +29,15 @@ function Modal({ id }) {
     setDescription("");
     setPrice("");
     setDate("");
+
+    dispatch(setIsModalOpened(false));
+    window.location.reload(false);
   };
 
   return (
     <div className={styles.modal}>
       <header>
-        <h2 className={styles.modal__title}>update user</h2>
+        <h2 className={styles.modal__title}>update event</h2>
         <span
           className={styles.modal__close}
           onClick={() => dispatch(setIsModalOpened(false))}
