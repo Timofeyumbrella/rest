@@ -44,6 +44,11 @@ function Header() {
           <Link href="/subscriptions">
             <a className={styles.header__link}>Subscriptions</a>
           </Link>
+          {token.length > 0 && (
+            <Link href="/profile">
+              <a className={styles.header__link}>Profile</a>
+            </Link>
+          )}
         </nav>
       </div>
     </div>

@@ -1,0 +1,54 @@
+.profile {
+  display: flex;
+  justify-content: center;
+
+  &__card {
+    width: 50%;
+    padding: 1rem;
+    margin-top: 10rem;
+    border-radius: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 1.3rem rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__name,
+  &__email,
+  &__gender {
+    font-weight: 400;
+    letter-spacing: 1px;
+  }
+
+  &__email,
+  &__gender,
+  &__age {
+    margin-top: 0.8rem;
+  }
+
+  &__email {
+    font-size: 2.5rem;
+  }
+
+  &__age {
+    font-size: 2rem;
+  }
+
+  &__edit {
+    margin: 3rem 0;
+    width: 15rem;
+    height: 5rem;
+    background-color: inherit;
+    box-shadow: 0 0 1.3rem rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    font-size: 1.9rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+}

@@ -1,6 +1,7 @@
 const { useSelector } = require("react-redux");
 
 import axios from "axios";
+import atob from "atob";
 
 function useAuth() {
   const { token } = useSelector((state) => state.token);
@@ -30,6 +31,8 @@ function useAuth() {
 
     return res.data.access;
   };
+
+  const getProfile = () => JSON.parse(atob(token.split(".")[1])).user;
 
   const createEvent = ({ title, description, price, date }) =>
     instance.post("/events", {
@@ -64,6 +67,7 @@ function useAuth() {
   return {
     register,
     login,
+    getProfile,
     createEvent,
     getEvents,
     getEvent,
