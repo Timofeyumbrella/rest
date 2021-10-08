@@ -1,14 +1,20 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import useAuth from "hooks/useAuth";
 
 import Modal from "components/Modal/Modal";
 
+import { setIsModalOpened } from "redux/modal/modal.actions";
+
 import styles from "./EventPage.module.scss";
 
 function EventPage() {
   const [event, setEvent] = useState({});
-  const [showModal, setShowModal] = useState(false);
+
+  const { isModalOpened } = useSelector((state) => state.modal);
+
+  const dispatch = useDispatch();
 
   const router = useRouter();
   const { id } = router.query;
@@ -42,7 +48,7 @@ function EventPage() {
           <div className={styles.eventPage__buttons}>
             <button
               className={styles.eventPage__button}
-              onClick={() => setShowModal(true)}
+              onClick={() => dispatch(setIsModalOpened(true))}
             >
               udpate
             </button>
@@ -51,7 +57,7 @@ function EventPage() {
             </button>
           </div>
 
-          {showModal && <Modal id={id} />}
+          {isModalOpened && <Modal id={id} />}
         </div>
       ) : (
         <div className={styles.eventPage__spinner} />

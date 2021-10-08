@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import useAuth from "hooks/useAuth";
+
+import { setIsModalOpened } from "redux/modal/modal.actions";
 
 import styles from "./Modal.module.scss";
 
@@ -9,6 +12,7 @@ function Modal({ id }) {
   const [price, setPrice] = useState("");
   const [date, setDate] = useState("");
 
+  const dispatch = useDispatch();
   const auth = useAuth();
 
   const handleTitleChange = (event) => setTitle(event.target.value);
@@ -20,11 +24,24 @@ function Modal({ id }) {
     event.preventDefault();
 
     await auth.updateEvent({ id, title, description, price, date });
+
+    setTitle("");
+    setDescription("");
+    setPrice("");
+    setDate("");
   };
 
   return (
     <div className={styles.modal}>
-      <h2 className={styles.modal__title}>update user</h2>
+      <header>
+        <h2 className={styles.modal__title}>update user</h2>
+        <span
+          className={styles.modal__close}
+          onClick={() => dispatch(setIsModalOpened(false))}
+        >
+          &Chi;
+        </span>
+      </header>
       <form className={styles.modal__form} onSubmit={handleSubmit}>
         <input
           type="text"
