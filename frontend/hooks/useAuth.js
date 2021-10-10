@@ -1,10 +1,14 @@
-const { useSelector } = require("react-redux");
+import { useSelector, useDispatch } from "react-redux";
 
 import axios from "axios";
 import atob from "atob";
 
+import { setToken } from "redux/token/token.actions";
+
 function useAuth() {
   const { token } = useSelector((state) => state.token);
+
+  const dispatch = useDispatch();
 
   const instance = axios.create({ baseURL: "http://localhost:5000" });
 
@@ -64,8 +68,16 @@ function useAuth() {
 
   const deleteEvent = (id) => instance.delete(`/events/${id}`);
 
-  const updateUser = ({ id, name, email, age, gender, password, roleId }) =>
-    instance.put(`/users/${id}`, {
+  const updateUser = async ({
+    id,
+    name,
+    email,
+    age,
+    gender,
+    password,
+    roleId,
+  }) => {
+    const { data: res } = await instance.put(`/users/${id}`, {
       name,
       email,
       age,
@@ -73,6 +85,9 @@ function useAuth() {
       password,
       roleId,
     });
+
+    dispatch(setToken(res.data.access));
+  };
 
   return {
     register,
