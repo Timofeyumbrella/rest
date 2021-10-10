@@ -29,7 +29,7 @@ function EventPage() {
     };
 
     getEvent();
-  }, [id]);
+  }, [id, event]);
 
   const handleDelete = async () => {
     await auth.deleteEvent(id);

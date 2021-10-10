@@ -23,7 +23,7 @@ function Events() {
     };
 
     getEvents();
-  }, []);
+  }, [events]);
 
   return (
     <div className={styles.events}>
