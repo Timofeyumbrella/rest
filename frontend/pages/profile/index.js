@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import useAuth from "hooks/useAuth";
+import Spinner from "components/Spinner/Spinner";
 
 import styles from "./Profile.module.scss";
 
@@ -112,6 +113,10 @@ function Profile() {
             />
           </fieldset>
         </form>
+      ) : !Object.keys(user).length ? (
+        <div className={styles.profile__spinner}>
+          <Spinner />
+        </div>
       ) : (
         <div className={styles.profile__card}>
           <h1 className={styles.profile__name}>{user.name}</h1>

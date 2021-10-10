@@ -5,6 +5,7 @@ import useAuth from "hooks/useAuth";
 
 import Event from "components/Event/Event";
 import EventForm from "components/EventForm/EventForm";
+import Spinner from "components/Spinner/Spinner";
 
 import styles from "./Events.module.scss";
 
@@ -27,7 +28,11 @@ function Events() {
 
   return (
     <div className={styles.events}>
-      {token.length ? (
+      {token.length && !events.length ? (
+        <div className={styles.events__spinner}>
+          <Spinner />
+        </div>
+      ) : token.length && events.length ? (
         <>
           <EventForm />
           <div className={styles.events__container}>
