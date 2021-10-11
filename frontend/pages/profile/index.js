@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 import useAuth from "hooks/useAuth";
 import Spinner from "components/Spinner/Spinner";
@@ -17,6 +18,7 @@ function Profile() {
 
   const { token } = useSelector((state) => state.token);
   const auth = useAuth();
+  const router = useRouter();
 
   const handleNameChange = (event) => setName(event.target.value);
   const handleEmailChange = (event) => setEmail(event.target.value);
@@ -43,6 +45,8 @@ function Profile() {
   };
 
   useEffect(() => {
+    if (!token) return router.push("/user/login");
+
     const getProfile = () => {
       setUser(auth.getProfile());
     };
