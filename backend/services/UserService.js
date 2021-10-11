@@ -3,6 +3,8 @@ const ApiError = require("../error/ApiError");
 const bcrypt = require("bcrypt");
 const atob = require("atob");
 
+const generateTokens = require("../utils/auth");
+
 const UserService = {
   findAll: (page, limit) => {
     const maxLimit = 40;
@@ -30,11 +32,13 @@ const UserService = {
       throw new ApiError(404);
     }
 
-    return userToUpdate.update({
+    const updatedUser = await userToUpdate.update({
       password: await bcrypt.hash(password, 10),
       roleId: jwtUser.roleId === 1 ? roleId : 2,
       ...userFields,
     });
+
+    return generateTokens(updatedUser);
   },
 
   destroy: async (id) => {

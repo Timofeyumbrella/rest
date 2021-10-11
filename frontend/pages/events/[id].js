@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import useAuth from "hooks/useAuth";
 
 import Modal from "components/Modal/Modal";
+import Spinner from "components/Spinner/Spinner";
 
 import { setIsModalOpened } from "redux/modal/modal.actions";
 
@@ -64,7 +65,9 @@ function EventPage() {
           {isModalOpened && <Modal id={id} />}
         </div>
       ) : (
-        <div className={styles.eventPage__spinner} />
+        <div className={styles.eventPage__spinner}>
+          <Spinner />
+        </div>
       )}
     </div>
   );

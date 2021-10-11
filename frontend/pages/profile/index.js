@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 import useAuth from "hooks/useAuth";
-import { setToken } from "redux/token/token.actions";
+import Spinner from "components/Spinner/Spinner";
 
 import styles from "./Profile.module.scss";
 
@@ -16,9 +15,8 @@ function Profile() {
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
 
+  const { token } = useSelector((state) => state.token);
   const auth = useAuth();
-  const router = useRouter();
-  const dispatch = useDispatch();
 
   const handleNameChange = (event) => setName(event.target.value);
   const handleEmailChange = (event) => setEmail(event.target.value);
@@ -41,8 +39,7 @@ function Profile() {
       roleId,
     });
 
-    dispatch(setToken(""));
-    router.push("/user/login");
+    setEditMode(false);
   };
 
   useEffect(() => {
@@ -51,7 +48,7 @@ function Profile() {
     };
 
     getProfile();
-  }, []);
+  }, [token]);
 
   return (
     <div className={styles.profile}>
@@ -116,6 +113,10 @@ function Profile() {
             />
           </fieldset>
         </form>
+      ) : !Object.keys(user).length ? (
+        <div className={styles.profile__spinner}>
+          <Spinner />
+        </div>
       ) : (
         <div className={styles.profile__card}>
           <h1 className={styles.profile__name}>{user.name}</h1>

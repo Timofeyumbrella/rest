@@ -31,7 +31,6 @@ function Modal({ id }) {
     setDate("");
 
     dispatch(setIsModalOpened(false));
-    window.location.reload(false);
   };
 
   return (
