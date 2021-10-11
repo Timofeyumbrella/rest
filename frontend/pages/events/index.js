@@ -17,13 +17,19 @@ function Events() {
   const auth = useAuth();
 
   useEffect(() => {
+    let isMounted = true;
+
     const getEvents = async () => {
       if (!token) return;
 
-      setEvents(await auth.getEvents());
+      if (isMounted) setEvents(await auth.getEvents());
     };
 
     getEvents();
+
+    return () => {
+      isMounted = false;
+    };
   }, [events]);
 
   return (
