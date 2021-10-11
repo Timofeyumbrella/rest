@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 
-import { removeToken } from "redux/token/token.actions";
+import { setToken } from "redux/token/token.actions";
 
 import styles from "./Header.module.scss";
 
@@ -32,7 +32,7 @@ function Header() {
           {token.length ? (
             <a
               className={styles.header__link}
-              onClick={() => dispatch(removeToken())}
+              onClick={() => dispatch(setToken(""))}
             >
               Sign out
             </a>

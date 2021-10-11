@@ -11,11 +11,6 @@ const tokenReducer = (state = INITIAL_STATE, action) => {
         ...state,
         token: action.payload,
       };
-    case TokenActionTypes.REMOVE_TOKEN:
-      return {
-        ...state,
-        token: "",
-      };
     default:
       return state;
   }
