@@ -118,12 +118,12 @@ function Profile() {
           </fieldset>
         </form>
       )}
-      {!Object.keys(user).length && (
+      {!Object.keys(user).length > 0 && (
         <div className={styles.profile__spinner}>
           <Spinner />
         </div>
       )}
-      {Object.keys(user).length && !editMode && (
+      {Object.keys(user).length > 0 && !editMode && (
         <div className={styles.profile__card}>
           <h1 className={styles.profile__name}>{user.name}</h1>
           <h2 className={styles.profile__email}>{user.email}</h2>
