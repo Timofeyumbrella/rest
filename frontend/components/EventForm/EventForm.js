@@ -1,5 +1,6 @@
 import { useState } from "react";
-import useAuth from "hooks/useAuth";
+
+import create from "utils/api/event/create";
 
 import styles from "./EventForm.module.scss";
 
@@ -9,8 +10,6 @@ function EventForm() {
   const [price, setPrice] = useState("");
   const [date, setDate] = useState("");
 
-  const auth = useAuth();
-
   const handleTitleChange = (event) => setTitle(event.target.value);
   const handleDescriptionChange = (event) => setDescription(event.target.value);
   const handlePriceChange = (event) => setPrice(event.target.value);
@@ -19,7 +18,7 @@ function EventForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    await auth.createEvent({ title, description, price, date });
+    await create({ title, description, price, date });
 
     setTitle("");
     setDescription("");

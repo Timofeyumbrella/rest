@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import useAuth from "hooks/useAuth";
 
 import { setIsModalOpened } from "redux/modal/modal.actions";
+
+import update from "utils/api/event/update";
 
 import styles from "./Modal.module.scss";
 
@@ -13,7 +14,6 @@ function Modal({ id }) {
   const [date, setDate] = useState("");
 
   const dispatch = useDispatch();
-  const auth = useAuth();
 
   const handleTitleChange = (event) => setTitle(event.target.value);
   const handleDescriptionChange = (event) => setDescription(event.target.value);
@@ -23,7 +23,7 @@ function Modal({ id }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    await auth.updateEvent({ id, title, description, price, date });
+    await update({ id, title, description, price, date });
 
     setTitle("");
     setDescription("");

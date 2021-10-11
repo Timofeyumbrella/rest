@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import useAuth from "hooks/useAuth";
+import findAll from "utils/api/event/findAll";
 
 import Event from "components/Event/Event";
 import EventForm from "components/EventForm/EventForm";
@@ -14,32 +14,26 @@ function Events() {
 
   const { token } = useSelector((state) => state.token);
 
-  const auth = useAuth();
-
   useEffect(() => {
-    let isMounted = true;
-
     const getEvents = async () => {
-      if (!token) return;
+      if (!token.length) return;
 
-      if (isMounted) setEvents(await auth.getEvents());
+      const events = await findAll();
+
+      setEvents(events);
     };
 
     getEvents();
-
-    return () => {
-      isMounted = false;
-    };
   }, [events]);
 
   return (
     <div className={styles.events}>
-      {token.length && !events.length && (
+      {token.length > 0 && !events.length > 0 && (
         <div className={styles.events__spinner}>
           <Spinner />
         </div>
       )}
-      {token.length && events.length && (
+      {token.length > 0 && events.length > 0 && (
         <>
           <EventForm />
           <div className={styles.events__container}>

@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import useAuth from "hooks/useAuth";
+
+import { setIsModalOpened } from "redux/modal/modal.actions";
+import find from "utils/api/event/find";
+import destroy from "utils/api/event/destroy";
 
 import Modal from "components/Modal/Modal";
 import Spinner from "components/Spinner/Spinner";
-
-import { setIsModalOpened } from "redux/modal/modal.actions";
 
 import styles from "./EventPage.module.scss";
 
@@ -20,27 +21,27 @@ function EventPage() {
   const router = useRouter();
   const { id } = router.query;
 
-  const auth = useAuth();
-
   useEffect(() => {
     const getEvent = async () => {
       if (!id) return;
 
-      setEvent(await auth.getEvent(id));
+      const event = await find(id);
+
+      setEvent(event);
     };
 
     getEvent();
   }, [id]);
 
   const handleDelete = async () => {
-    await auth.deleteEvent(id);
+    await destroy(id);
 
     router.push("/events");
   };
 
   return (
     <div className={styles.eventPage}>
-      {Object.keys(event).length && (
+      {Object.keys(event).length > 0 && (
         <div className={styles.eventPage__event}>
           <div className={styles.eventPage__content}>
             <h1 className={styles.eventPage__title}>{event.title}</h1>
