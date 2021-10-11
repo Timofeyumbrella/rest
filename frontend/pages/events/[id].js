@@ -40,7 +40,7 @@ function EventPage() {
 
   return (
     <div className={styles.eventPage}>
-      {Object.keys(event).length ? (
+      {Object.keys(event).length && (
         <div className={styles.eventPage__event}>
           <div className={styles.eventPage__content}>
             <h1 className={styles.eventPage__title}>{event.title}</h1>
@@ -64,7 +64,8 @@ function EventPage() {
 
           {isModalOpened && <Modal id={id} />}
         </div>
-      ) : (
+      )}
+      {!Object.keys(event).length && (
         <div className={styles.eventPage__spinner}>
           <Spinner />
         </div>

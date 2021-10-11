@@ -28,11 +28,12 @@ function Events() {
 
   return (
     <div className={styles.events}>
-      {token.length && !events.length ? (
+      {token.length && !events.length && (
         <div className={styles.events__spinner}>
           <Spinner />
         </div>
-      ) : token.length && events.length ? (
+      )}
+      {token.length && events.length && (
         <>
           <EventForm />
           <div className={styles.events__container}>
@@ -41,7 +42,8 @@ function Events() {
             })}
           </div>
         </>
-      ) : (
+      )}
+      {!token.length && (
         <h2 className={styles.events__unavailable}>You need to login first</h2>
       )}
     </div>

@@ -52,7 +52,7 @@ function Profile() {
 
   return (
     <div className={styles.profile}>
-      {editMode ? (
+      {editMode && (
         <form className={styles.profile__card} onSubmit={handleSubmit}>
           <fieldset>
             <legend>
@@ -113,11 +113,13 @@ function Profile() {
             />
           </fieldset>
         </form>
-      ) : !Object.keys(user).length ? (
+      )}
+      {!Object.keys(user).length && (
         <div className={styles.profile__spinner}>
           <Spinner />
         </div>
-      ) : (
+      )}
+      {Object.keys(user).length && !editMode && (
         <div className={styles.profile__card}>
           <h1 className={styles.profile__name}>{user.name}</h1>
           <h2 className={styles.profile__email}>{user.email}</h2>
