@@ -6,7 +6,7 @@ import styles from "./Event.module.scss";
 function Event({ event }) {
   const { id, title, description, price, date } = event;
 
-  const allowedDescription = useDescriptionShortener(description);
+  const allowedDescription = useDescriptionShortener(description, 10);
 
   return (
     <div className={styles.event}>
