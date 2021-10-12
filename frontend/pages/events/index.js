@@ -24,7 +24,7 @@ function Events() {
     };
 
     getEvents();
-  }, [events]);
+  }, [events.length]);
 
   return (
     <div className={styles.events}>
