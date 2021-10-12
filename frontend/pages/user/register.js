@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import register from "utils/api/user/register";
+import useAuth from "hooks/useAuth";
 
 import styles from "./Register.module.scss";
 
@@ -16,9 +16,12 @@ function Register() {
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
 
+  const auth = useAuth();
   const { token } = useSelector((state) => state.token);
 
-  if (token.length) router.push("/");
+  useEffect(() => {
+    if (token.length) router.push("/");
+  }, [token]);
 
   const handleNameChange = (event) => setName(event.target.value);
   const handleAgeChange = (event) => setAge(event.target.value);
@@ -29,19 +32,15 @@ function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      await register({ name, age, email, gender, password });
+    await auth.register({ name, age, email, gender, password });
 
-      setName("");
-      setAge("");
-      setEmail("");
-      setGender("");
-      setPassword("");
+    setName("");
+    setAge("");
+    setEmail("");
+    setGender("");
+    setPassword("");
 
-      router.push("/user/login");
-    } catch (error) {
-      setError(JSON.parse(JSON.stringify(error)));
-    }
+    router.push("/user/login");
   };
 
   return (

@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
 import { setToken } from "redux/token/token.actions";
-import login from "utils/api/user/login";
+import useAuth from "hooks/useAuth";
 
 import styles from "./Login.module.scss";
 
@@ -14,9 +14,12 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const auth = useAuth();
   const { token } = useSelector((state) => state.token);
 
-  if (token.length) router.push("/");
+  useEffect(() => {
+    if (token.length) router.push("/");
+  }, [token]);
 
   const dispatch = useDispatch();
 
@@ -27,7 +30,7 @@ function Login() {
     event.preventDefault();
 
     try {
-      dispatch(setToken(await login({ email, password })));
+      dispatch(setToken(await auth.login({ email, password })));
 
       setEmail("");
       setPassword("");
