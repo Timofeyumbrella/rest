@@ -2,7 +2,7 @@ import axios from "axios";
 import { store } from "redux/store";
 
 function getAxiosInstance() {
-  const instance = axios.create({ baseURL: "http://localhost:5000" });
+  const instance = axios.create({ baseURL: process.env.NEXT_PUBLIC_BASE_URL });
 
   const state = store.getState();
   const { token } = state.token;
