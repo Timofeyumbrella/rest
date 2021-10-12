@@ -29,16 +29,12 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      dispatch(setToken(await auth.login({ email, password })));
+    dispatch(setToken(await auth.login({ email, password })));
 
-      setEmail("");
-      setPassword("");
+    setEmail("");
+    setPassword("");
 
-      router.push("/");
-    } catch (error) {
-      setError(JSON.parse(JSON.stringify(error)));
-    }
+    router.push("/");
   };
 
   return (
@@ -66,7 +62,7 @@ function Login() {
         <input type="submit" value="Login" className={styles.login__submit} />
       </form>
 
-      <h3>Don't have an account yet?</h3>
+      <h2 className={styles.login__register}>Don't have an account yet?</h2>
       <Link href="/user/register">
         <a className={styles.login__link}>Create a brand new one here</a>
       </Link>

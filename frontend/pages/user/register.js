@@ -94,7 +94,7 @@ function Register() {
         />
       </form>
 
-      <h3>Already have an account?</h3>
+      <h2 className={styles.register__login}>Already have an account?</h2>
       <Link href="/user/login">
         <a className={styles.register__link}>Login here</a>
       </Link>
