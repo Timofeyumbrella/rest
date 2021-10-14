@@ -27,7 +27,7 @@ function EventForm() {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit} disabled>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <fieldset>
         <legend>Create your new event</legend>
         <input

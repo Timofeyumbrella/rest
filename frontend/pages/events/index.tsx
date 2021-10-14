@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import findAll from "utils/api/event/findAll";
+import { RootState } from "redux/root.reducer";
 
 import Event from "components/Event/Event";
 import EventForm from "components/EventForm/EventForm";
@@ -12,7 +13,7 @@ import styles from "./Events.module.scss";
 function Events() {
   const [events, setEvents] = useState([]);
 
-  const { token } = useSelector((state) => state.token);
+  const { token } = useSelector((state: RootState) => state.token);
 
   useEffect(() => {
     const getEvents = async () => {
@@ -28,7 +29,7 @@ function Events() {
 
   return (
     <div className={styles.events}>
-      {token.length > 0 && !events.length > 0 && (
+      {token.length > 0 && !events.length && (
         <div className={styles.events__spinner}>
           <Spinner />
         </div>

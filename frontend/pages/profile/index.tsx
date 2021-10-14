@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
+import User from "interfaces/User";
+
 import { setToken } from "redux/token/token.actions";
+import { RootState } from "redux/root.reducer";
 import update from "utils/api/user/update";
 import find from "utils/api/user/find";
 
@@ -11,7 +14,7 @@ import Spinner from "components/Spinner/Spinner";
 import styles from "./Profile.module.scss";
 
 function Profile() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<User>();
   const [editMode, setEditMode] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -19,7 +22,7 @@ function Profile() {
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
 
-  const { token } = useSelector((state) => state.token);
+  const { token } = useSelector((state: RootState) => state.token);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -29,6 +32,14 @@ function Profile() {
   const handleAgeChange = (event) => setAge(event.target.value);
   const handleGenderChange = (event) => setGender(event.target.value);
   const handlePasswordChange = (event) => setPassword(event.target.value);
+
+  useEffect(() => {
+    if (!token) router.push("/user/login");
+
+    const profile = find();
+
+    setUser(profile);
+  }, [token]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -48,18 +59,6 @@ function Profile() {
     dispatch(setToken(token));
     setEditMode(false);
   };
-
-  useEffect(() => {
-    if (!token) return router.push("/user/login");
-
-    const getProfile = () => {
-      const profile = find();
-
-      setUser(profile);
-    };
-
-    getProfile();
-  }, [token]);
 
   return (
     <div className={styles.profile}>
@@ -125,7 +124,7 @@ function Profile() {
           </fieldset>
         </form>
       )}
-      {!Object.keys(user).length > 0 && (
+      {!Object.keys(user).length && (
         <div className={styles.profile__spinner}>
           <Spinner />
         </div>

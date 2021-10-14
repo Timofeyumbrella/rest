@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 
-function useDescriptionShortener(text, allowedLength) {
+function useDescriptionShortener(text: string, allowedLength: number) {
   return useMemo(() => {
-    const words = text.split(" ");
+    const words: string[] = text.split(" ");
 
     if (words.length < allowedLength) return text;
 

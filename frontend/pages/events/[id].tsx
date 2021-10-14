@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
 import { setIsModalOpened } from "redux/modal/modal.actions";
+import { RootState } from "redux/root.reducer";
 import find from "utils/api/event/find";
 import destroy from "utils/api/event/destroy";
 
@@ -11,10 +12,18 @@ import Spinner from "components/Spinner/Spinner";
 
 import styles from "./EventPage.module.scss";
 
-function EventPage() {
-  const [event, setEvent] = useState({});
+interface Event {
+  id: number;
+  title: string;
+  description: string;
+  price: string;
+  date: Date;
+}
 
-  const { isModalOpened } = useSelector((state) => state.modal);
+function EventPage() {
+  const [event, setEvent] = useState<Event>();
+
+  const { isModalOpened } = useSelector((state: RootState) => state.modal);
 
   const dispatch = useDispatch();
 
@@ -48,7 +57,7 @@ function EventPage() {
             <p className={styles.eventPage__description}>{event.description}</p>
             <span className={styles.eventPage__price}>{event.price}$</span>
             <span className={styles.eventPage__date}>
-              {event.date.substring(10, -10)}
+              {event.date.toString().substring(10, -10)}
             </span>
           </div>
           <div className={styles.eventPage__buttons}>

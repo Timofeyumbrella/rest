@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 import { setToken } from "redux/token/token.actions";
+import { RootState } from "redux/root.reducer";
 import useAuth from "hooks/useAuth";
 
 import styles from "./Login.module.scss";
@@ -15,7 +16,7 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const auth = useAuth();
-  const { token } = useSelector((state) => state.token);
+  const { token } = useSelector((state: RootState) => state.token);
 
   useEffect(() => {
     if (token.length) router.push("/");
@@ -29,7 +30,9 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    dispatch(setToken(await auth.login({ email, password })));
+    const token = await auth.login({ email, password });
+
+    dispatch(setToken(token));
 
     setEmail("");
     setPassword("");

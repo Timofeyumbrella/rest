@@ -1,10 +1,12 @@
 import getAxiosInstance from "utils/instance";
 
+interface Login {}
+
 function useAuth() {
   const instance = getAxiosInstance();
 
   const login = async ({ email, password }) => {
-    const { data: res } = await instance.post("/user/login", {
+    const { data: res } = await instance.post<Login>("/user/login", {
       email,
       password,
     });

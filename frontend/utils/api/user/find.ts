@@ -1,7 +1,9 @@
 import { store } from "redux/store";
 import atob from "atob";
 
-const find = () => {
+import User from "interfaces/User";
+
+const find = (): User => {
   const state = store.getState();
 
   const { token } = state.token;

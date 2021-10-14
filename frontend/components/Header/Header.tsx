@@ -2,12 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 
+import { RootState } from "redux/root.reducer";
 import { setToken } from "redux/token/token.actions";
 
 import styles from "./Header.module.scss";
 
 function Header() {
-  const { token } = useSelector((state) => state.token);
+  const { token } = useSelector((state: RootState) => state.token);
 
   const dispatch = useDispatch();
 

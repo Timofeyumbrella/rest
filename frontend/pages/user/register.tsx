@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+import { RootState } from "redux/root.reducer";
 import useAuth from "hooks/useAuth";
 
 import styles from "./Register.module.scss";
@@ -17,7 +18,7 @@ function Register() {
   const [password, setPassword] = useState("");
 
   const auth = useAuth();
-  const { token } = useSelector((state) => state.token);
+  const { token } = useSelector((state: RootState) => state.token);
 
   useEffect(() => {
     if (token.length) router.push("/");
