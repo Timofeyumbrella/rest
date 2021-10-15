@@ -2,19 +2,19 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
-import User from "interfaces/User";
-
 import { setToken } from "redux/token/token.actions";
 import { RootState } from "redux/root.reducer";
 import update from "utils/api/user/update";
 import find from "utils/api/user/find";
+
+import User from "interfaces/User";
 
 import Spinner from "components/Spinner/Spinner";
 
 import styles from "./Profile.module.scss";
 
 function Profile() {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User>({} as User);
   const [editMode, setEditMode] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -34,7 +34,11 @@ function Profile() {
   const handlePasswordChange = (event) => setPassword(event.target.value);
 
   useEffect(() => {
-    if (!token) router.push("/user/login");
+    if (!token) {
+      router.push("/user/login");
+
+      return;
+    }
 
     const profile = find();
 

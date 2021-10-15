@@ -7,21 +7,15 @@ import { RootState } from "redux/root.reducer";
 import find from "utils/api/event/find";
 import destroy from "utils/api/event/destroy";
 
+import Event from "interfaces/Event";
+
 import Modal from "components/Modal/Modal";
 import Spinner from "components/Spinner/Spinner";
 
 import styles from "./EventPage.module.scss";
 
-interface Event {
-  id: number;
-  title: string;
-  description: string;
-  price: string;
-  date: Date;
-}
-
 function EventPage() {
-  const [event, setEvent] = useState<Event>();
+  const [event, setEvent] = useState<Event>({} as Event);
 
   const { isModalOpened } = useSelector((state: RootState) => state.modal);
 

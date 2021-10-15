@@ -1,14 +1,6 @@
 import getAxiosInstance from "utils/instance";
 
-interface Event {
-  data: {
-    id: number;
-    title: string;
-    description: string;
-    price: string;
-    date: Date;
-  };
-}
+import Event from "interfaces/Event";
 
 const find = async (id) => {
   const instance = getAxiosInstance();
